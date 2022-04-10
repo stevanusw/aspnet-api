@@ -2,6 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\core\TodoApp.Application\TodoApp.Application.csproj" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Configuration\" />
   </ItemGroup>
 
   <PropertyGroup>
