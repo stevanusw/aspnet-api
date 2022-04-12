@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using TodoApp.Data.Configuration;
 using TodoApp.Domain.Entities;
 
 namespace TodoApp.Data
@@ -13,17 +15,26 @@ namespace TodoApp.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(BaseEntityConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(TodoConfiguration).Assembly);
 
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 if (entity.ClrType.IsSubclassOf(typeof(BaseEntity)))
                 {
+                    entity.FindProperty(nameof(BaseEntity.Id))!
+                        .IsPrimaryKey();
+
                     entity.FindProperty(nameof(BaseEntity.CreateDate))!
                         .SetDefaultValueSql("SYSUTCDATETIME()");
 
-                    entity.FindProperty(nameof(BaseEntity.LastUpdateDate))
+                    entity.FindProperty(nameof(BaseEntity.LastUpdateDate))!
                         .SetComputedColumnSql("SYSUTCDATETIME()");
+
+                    entity.FindProperty(nameof(BaseEntity.Timestamp))!
+                        .IsConcurrencyToken = true;
+
+                    entity.FindProperty(nameof(BaseEntity.Timestamp))!
+                        .ValueGenerated = ValueGenerated.OnAddOrUpdate;
                 }
             }
         }

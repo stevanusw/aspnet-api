@@ -12,8 +12,8 @@ using TodoApp.Data;
 namespace TodoApp.Data.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20220410103546_AddEntities")]
-    partial class AddEntities
+    [Migration("20220411124052_CreateEntities")]
+    partial class CreateEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
