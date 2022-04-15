@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace TodoApp.Data
 {
-    public class TodoDbContextFactory : IDesignTimeDbContextFactory<TodoDbContext>
+    internal class TodoDbContextFactory : IDesignTimeDbContextFactory<TodoDbContext>
     {
         public TodoDbContext CreateDbContext(string[] args)
         {

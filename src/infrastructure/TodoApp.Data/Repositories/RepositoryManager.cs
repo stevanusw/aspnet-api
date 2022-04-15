@@ -1,8 +1,8 @@
-﻿using TodoApp.Application.Contracts;
+﻿using TodoApp.Contracts.Repositories;
 
 namespace TodoApp.Data.Repositories
 {
-    public sealed class RepositoryManager : IRepositoryManager
+    internal class RepositoryManager : IRepositoryManager
     {
         private readonly TodoDbContext _dbContext;
         private readonly Lazy<ITodoRepository> _todoRepository;

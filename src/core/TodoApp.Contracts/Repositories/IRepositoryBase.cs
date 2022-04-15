@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace TodoApp.Application.Contracts
+namespace TodoApp.Contracts.Repositories
 {
     public interface IRepositoryBase<T>
     {

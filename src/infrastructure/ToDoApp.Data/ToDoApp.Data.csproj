@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\TodoApp.Application\TodoApp.Application.csproj" />
+    <ProjectReference Include="..\..\core\TodoApp.Contracts\TodoApp.Contracts.csproj" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.3" />
   </ItemGroup>
 

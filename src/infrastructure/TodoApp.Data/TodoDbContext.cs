@@ -5,7 +5,7 @@ using TodoApp.Domain.Entities;
 
 namespace TodoApp.Data
 {
-    public class TodoDbContext : DbContext
+    internal class TodoDbContext : DbContext
     {
         public TodoDbContext(DbContextOptions options) : base(options)
         {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using TodoApp.Application.Contracts;
+using TodoApp.Contracts.Repositories;
 
 namespace TodoApp.Data.Repositories
 {
-    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    internal abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
         protected readonly TodoDbContext DbContext;
 

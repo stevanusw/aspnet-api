@@ -1,8 +1,8 @@
-﻿using TodoApp.Application.Contracts;
+﻿using TodoApp.Contracts.Repositories;
 
 namespace TodoApp.Data.Repositories
 {
-    public class TaskRepository : RepositoryBase<Domain.Entities.Task>, ITaskRepository
+    internal class TaskRepository : RepositoryBase<Domain.Entities.Task>, ITaskRepository
     {
         public TaskRepository(TodoDbContext dbContext) : base(dbContext)
         {
