@@ -19,5 +19,7 @@ namespace TodoApp.Data.Repositories
         public ITaskRepository Task => _taskRepository.Value;
 
         public void Save() => _dbContext.SaveChanges();
+
+        public async Task SaveAsync() => await _dbContext.SaveChangesAsync();
     }
 }
