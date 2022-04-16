@@ -10,7 +10,7 @@ namespace TodoApp.Data
         public static IServiceCollection AddInfrastructureData(this IServiceCollection services,
             IConfiguration configuration)
         {
-            return services.AddSqlServer<TodoDbContext>(configuration.GetConnectionString("sqlConnection"))
+            return services.AddSqlServer<TodoDbContext>(configuration.GetConnectionString("SqlConnection"))
                 .AddScoped<IRepositoryManager, RepositoryManager>();
         }
     }

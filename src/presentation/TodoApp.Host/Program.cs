@@ -1,8 +1,19 @@
+using Todo.Services;
+using TodoApp.Api;
+using TodoApp.Data;
+using TodoApp.WebApi;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddInfrastructureData(builder.Configuration)
+    .AddCoreServices();
 
-builder.Services.AddControllers();
+builder.Services.ConfigureCors();
+
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(AssemblyReference).Assembly);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -17,6 +28,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

@@ -27,8 +27,14 @@ namespace TodoApp.Data
                     entity.FindProperty(nameof(BaseEntity.CreateDate))!
                         .SetDefaultValueSql("SYSUTCDATETIME()");
 
+                    entity.FindProperty(nameof(BaseEntity.CreateDate))!
+                        .ValueGenerated = ValueGenerated.OnAdd;
+
                     entity.FindProperty(nameof(BaseEntity.LastUpdateDate))!
-                        .SetComputedColumnSql("SYSUTCDATETIME()");
+                        .SetDefaultValueSql("SYSUTCDATETIME()");
+
+                    entity.FindProperty(nameof(BaseEntity.LastUpdateDate))!
+                        .ValueGenerated = ValueGenerated.OnAddOrUpdate;
 
                     entity.FindProperty(nameof(BaseEntity.Timestamp))!
                         .IsConcurrencyToken = true;
@@ -39,7 +45,7 @@ namespace TodoApp.Data
             }
         }
 
-        public DbSet<Todo>? TodoList { get; set; }
+        public DbSet<Todo>? Todos { get; set; }
         public DbSet<Domain.Entities.Task>? Tasks { get; set; }
     }
 }

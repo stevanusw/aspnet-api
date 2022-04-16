@@ -8,7 +8,7 @@ namespace TodoApp.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Todo> builder)
         {
-            builder.ToTable("TodoList", "dbo");
+            builder.ToTable("Todos", "dbo");
 
             builder.Property(p => p.Name)
                 .IsRequired()
@@ -18,6 +18,19 @@ namespace TodoApp.Data.Configuration
                 .WithOne(d => d.TodoNavigation)
                 .HasForeignKey(d => d.TodoId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            #region Seed
+            builder.HasData(new Todo
+            {
+                Id = 1,
+                Name = "Learn Javascript",
+            },
+            new Todo
+            {
+                Id = 2,
+                Name = "Learn ASP.NET",
+            });
+            #endregion
         }
     }
 }

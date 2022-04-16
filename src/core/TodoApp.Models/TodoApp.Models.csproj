@@ -1,10 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\TodoApp.Domain\TodoApp.Domain.csproj" />
-    <ProjectReference Include="..\TodoApp.Models\TodoApp.Models.csproj" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

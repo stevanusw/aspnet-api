@@ -4,7 +4,6 @@
     {
         ITodoRepository Todo { get; }
         ITaskRepository Task { get; }
-        void Save();
         Task SaveAsync();
     }
 }

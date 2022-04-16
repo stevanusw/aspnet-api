@@ -15,9 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\Todo.Services\Todo.Services.csproj" />
     <ProjectReference Include="..\..\core\TodoApp.Contracts\TodoApp.Contracts.csproj" />
+    <ProjectReference Include="..\..\core\TodoApp.Services\TodoApp.Services.csproj" />
     <ProjectReference Include="..\..\infrastructure\TodoApp.Data\TodoApp.Data.csproj" />
+    <ProjectReference Include="..\TodoApp.Api\TodoApp.Api.csproj" />
   </ItemGroup>
 
 </Project>

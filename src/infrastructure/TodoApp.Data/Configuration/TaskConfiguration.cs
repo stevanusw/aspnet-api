@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities = TodoApp.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace TodoApp.Data.Configuration
 {
-    internal class TaskConfiguration : IEntityTypeConfiguration<Domain.Entities.Task>
+    internal class TaskConfiguration : IEntityTypeConfiguration<Entities.Task>
     {
-        public void Configure(EntityTypeBuilder<Domain.Entities.Task> builder)
+        public void Configure(EntityTypeBuilder<Entities.Task> builder)
         {
             builder.ToTable("Tasks", "dbo");
 
@@ -17,6 +18,33 @@ namespace TodoApp.Data.Configuration
                 .WithMany(p => p.Tasks)
                 .HasForeignKey(d => d.TodoId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            #region Seed
+            builder.HasData(new Entities.Task
+            {
+                Id = 1,
+                TodoId = 1,
+                Name = "Learn Ecmascript",
+            },
+            new Entities.Task
+            {
+                Id = 2,
+                TodoId = 1,
+                Name = "Learn Typescript",
+            },
+            new Entities.Task
+            {
+                Id = 3,
+                TodoId = 2,
+                Name = "Learn C#",
+            },
+            new Entities.Task
+            {
+                Id = 4,
+                TodoId = 2,
+                Name = "Learn SQL",
+            }); 
+            #endregion
         }
     }
 }

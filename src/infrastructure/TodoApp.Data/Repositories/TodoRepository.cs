@@ -1,4 +1,5 @@
-﻿using TodoApp.Contracts.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using TodoApp.Contracts.Repositories;
 using TodoApp.Domain.Entities;
 
 namespace TodoApp.Data.Repositories
@@ -8,5 +9,9 @@ namespace TodoApp.Data.Repositories
         public TodoRepository(TodoDbContext dbContext) : base(dbContext)
         {
         }
+
+        public async Task<IEnumerable<Todo>> GetTodosAsync(bool trackChanges)
+            => await FindAll(trackChanges)
+                .ToListAsync();
     }
 }

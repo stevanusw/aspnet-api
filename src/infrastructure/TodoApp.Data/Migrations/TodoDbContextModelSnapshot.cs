@@ -35,13 +35,10 @@ namespace TodoApp.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("LastUpdateDate")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
-                        .HasComputedColumnSql("SYSUTCDATETIME()");
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -61,6 +58,40 @@ namespace TodoApp.Data.Migrations
                     b.HasIndex("TodoId");
 
                     b.ToTable("Tasks", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Learn Ecmascript",
+                            TodoId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Learn Typescript",
+                            TodoId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Learn C#",
+                            TodoId = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Learn SQL",
+                            TodoId = 2
+                        });
                 });
 
             modelBuilder.Entity("TodoApp.Domain.Entities.Todo", b =>
@@ -76,10 +107,13 @@ namespace TodoApp.Data.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("SYSUTCDATETIME()");
 
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("LastUpdateDate")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2")
-                        .HasComputedColumnSql("SYSUTCDATETIME()");
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -93,7 +127,25 @@ namespace TodoApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TodoList", "dbo");
+                    b.ToTable("Todos", "dbo");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsCompleted = false,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Learn Javascript"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsCompleted = false,
+                            LastUpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Learn ASP.NET"
+                        });
                 });
 
             modelBuilder.Entity("TodoApp.Domain.Entities.Task", b =>
