@@ -18,6 +18,7 @@
     <ProjectReference Include="..\..\core\TodoApp.Contracts\TodoApp.Contracts.csproj" />
     <ProjectReference Include="..\..\core\TodoApp.Services\TodoApp.Services.csproj" />
     <ProjectReference Include="..\..\infrastructure\TodoApp.Data\TodoApp.Data.csproj" />
+    <ProjectReference Include="..\..\infrastructure\TodoApp.Logging\TodoApp.Logging.csproj" />
     <ProjectReference Include="..\TodoApp.Api\TodoApp.Api.csproj" />
   </ItemGroup>
 

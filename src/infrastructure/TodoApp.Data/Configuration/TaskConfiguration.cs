@@ -10,7 +10,7 @@ namespace TodoApp.Data.Configuration
         {
             builder.ToTable("Tasks", "dbo");
 
-            builder.Property(p => p.Name)
+            builder.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(100);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Entities = TodoApp.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using TodoApp.Data.Configuration;
 using TodoApp.Domain.Entities;
@@ -46,6 +47,7 @@ namespace TodoApp.Data
         }
 
         public DbSet<Todo>? Todos { get; set; }
-        public DbSet<Domain.Entities.Task>? Tasks { get; set; }
+        public DbSet<Entities.Task>? Tasks { get; set; }
+        public DbSet<Log>? Logs { get; set; }
     }
 }

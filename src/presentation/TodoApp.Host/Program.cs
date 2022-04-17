@@ -1,11 +1,15 @@
 using Todo.Services;
 using TodoApp.Api;
 using TodoApp.Data;
+using TodoApp.Logging;
 using TodoApp.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Host.ConfigureSerilog(builder.Configuration,
+    builder.Environment);
+
 builder.Services.AddInfrastructureData(builder.Configuration)
     .AddCoreServices();
 
