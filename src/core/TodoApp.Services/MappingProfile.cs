@@ -10,6 +10,8 @@ namespace TodoApp.Services
         {
             CreateMap<Entities.Todo, TodoDto>();
             CreateMap<Entities.Task, TaskDto>();
+
+            CreateMap<TodoForCreationDto, Entities.Todo>();
         }
     }
 }
