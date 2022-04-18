@@ -1,5 +1,6 @@
 using Todo.Services;
 using TodoApp.Api;
+using TodoApp.Api.Middlewares;
 using TodoApp.Data;
 using TodoApp.Logging;
 using TodoApp.WebApi;
@@ -10,10 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureSerilog(builder.Configuration,
     builder.Environment);
 
-builder.Services.AddInfrastructureData(builder.Configuration)
-    .AddCoreServices();
-
-builder.Services.ConfigureCors();
+builder.Services.ConfigureInfrastructureData(builder.Configuration)
+    .ConfigureCoreServices()
+    .ConfigureProblemDetails(builder.Environment)
+    .ConfigureCors();
 
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(AssemblyReference).Assembly);
@@ -25,6 +26,8 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.AddProblemDetails();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

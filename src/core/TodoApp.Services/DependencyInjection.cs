@@ -6,7 +6,7 @@ namespace Todo.Services
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddCoreServices(this IServiceCollection services)
+        public static IServiceCollection ConfigureCoreServices(this IServiceCollection services)
         {
             return services.AddScoped<IServiceManager, ServiceManager>()
                 .AddAutoMapper(typeof(MappingProfile));
