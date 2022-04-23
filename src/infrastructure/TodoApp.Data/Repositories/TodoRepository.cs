@@ -14,9 +14,9 @@ namespace TodoApp.Data.Repositories
             => await FindAll(trackChanges)
                 .ToListAsync();
 
-        public async Task<Todo?> GetTodoAsync(int todoId, bool trackChanges)
-            => await FindWhere(t => t.Id == todoId, trackChanges)
-            .SingleOrDefaultAsync();
+        public async Task<Todo?> GetTodoAsync(int id, bool trackChanges)
+            => await FindWhere(t => t.Id == id, trackChanges)
+                .SingleOrDefaultAsync();
 
         public void CreateTodo(Todo todo) => Create(todo);
     }

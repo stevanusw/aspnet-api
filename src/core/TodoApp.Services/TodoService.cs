@@ -4,6 +4,7 @@ using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Entities;
 using TodoApp.Models.Dtos;
+using TodoApp.Models.Exceptions;
 
 namespace TodoApp.Services
 {
@@ -13,9 +14,7 @@ namespace TodoApp.Services
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public TodoService(IRepositoryManager repository,
-            IMapper mapper,
-            ILogger logger)
+        public TodoService(IRepositoryManager repository, IMapper mapper, ILogger logger)
         {
             _repository = repository;
             _mapper = mapper;
@@ -32,9 +31,14 @@ namespace TodoApp.Services
             return dto;
         }
 
-        public async Task<TodoDto> GetTodoAsync(int todoId)
+        public async Task<TodoDto> GetTodoAsync(int id)
         {
-            var todo = await _repository.Todo.GetTodoAsync(todoId, false);
+            var todo = await _repository.Todo.GetTodoAsync(id, false);
+            if (todo == null)
+            {
+                throw new TodoNotFoundException(id);
+            }
+
             var dto = _mapper.Map<TodoDto>(todo);
 
             return dto;

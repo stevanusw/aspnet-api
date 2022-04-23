@@ -10,9 +10,7 @@ namespace TodoApp.Services
         private readonly Lazy<ITodoService> _todoService;
         private readonly Lazy<ITaskService> _taskService;
 
-        public ServiceManager(IRepositoryManager repository,
-            IMapper mapper,
-            IServiceProvider provider)
+        public ServiceManager(IRepositoryManager repository, IMapper mapper, IServiceProvider provider)
         {
             _todoService = new Lazy<ITodoService>(() => new TodoService(repository, 
                 mapper,
