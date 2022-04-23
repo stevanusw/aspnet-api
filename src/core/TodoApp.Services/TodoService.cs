@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Entities = TodoApp.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
-using TodoApp.Models;
+using TodoApp.Entities;
+using TodoApp.Models.Dtos;
 
-namespace Todo.Services
+namespace TodoApp.Services
 {
     internal class TodoService : ITodoService
     {
@@ -42,7 +42,7 @@ namespace Todo.Services
 
         public async Task<TodoDto> CreateTodoAsync(TodoForCreationDto todo)
         {
-            var entity = _mapper.Map<Entities.Todo>(todo);
+            var entity = _mapper.Map<Todo>(todo);
 
             _repository.Todo.CreateTodo(entity);
             await _repository.SaveAsync();

@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Domain.Entities
+﻿namespace TodoApp.Entities
 {
     public abstract class BaseEntity
     {

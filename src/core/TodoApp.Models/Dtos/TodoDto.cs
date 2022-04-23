@@ -1,4 +1,4 @@
-﻿namespace TodoApp.Models
+﻿namespace TodoApp.Models.Dtos
 {
     public record TodoDto(int Id,
         string Name,

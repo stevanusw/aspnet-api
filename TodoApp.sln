@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C2F6ABC6-DE2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{09300C56-A8C9-4BAA-A227-C23406A53E13}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Domain", "src\core\TodoApp.Domain\TodoApp.Domain.csproj", "{0A356EE2-79CF-462B-8E76-82C79C60F0E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Entities", "src\core\TodoApp.Entities\TodoApp.Entities.csproj", "{0A356EE2-79CF-462B-8E76-82C79C60F0E3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Contracts", "src\core\TodoApp.Contracts\TodoApp.Contracts.csproj", "{599C8679-50D7-445B-9342-DECBB99533F2}"
 EndProject
@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Api", "src\presenta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Models", "src\core\TodoApp.Models\TodoApp.Models.csproj", "{A4F237EC-E594-4DAF-996A-BFE25B3280FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodoApp.Logging", "src\infrastructure\TodoApp.Logging\TodoApp.Logging.csproj", "{1B798FDC-53BB-4ADE-B557-E4C64C4E0C79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApp.Logging", "src\infrastructure\TodoApp.Logging\TodoApp.Logging.csproj", "{1B798FDC-53BB-4ADE-B557-E4C64C4E0C79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

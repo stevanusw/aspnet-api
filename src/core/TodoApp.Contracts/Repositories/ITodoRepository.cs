@@ -1,4 +1,4 @@
-﻿using TodoApp.Domain.Entities;
+﻿using TodoApp.Entities;
 
 namespace TodoApp.Contracts.Repositories
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoApp.Contracts.Services;
-using TodoApp.Models;
+using TodoApp.Models.Dtos;
 
 namespace TodoApp.Api.Controllers
 {

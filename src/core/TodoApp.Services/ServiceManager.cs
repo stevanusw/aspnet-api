@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 
-namespace Todo.Services
+namespace TodoApp.Services
 {
     internal class ServiceManager : IServiceManager
     {

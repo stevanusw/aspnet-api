@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoApp.Contracts.Repositories;
-using TodoApp.Domain.Entities;
+using TodoApp.Entities;
 
 namespace TodoApp.Data.Repositories
 {

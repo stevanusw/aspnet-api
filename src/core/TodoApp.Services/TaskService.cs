@@ -2,9 +2,9 @@
 using Microsoft.Extensions.Logging;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
-using TodoApp.Models;
+using TodoApp.Models.Dtos;
 
-namespace Todo.Services
+namespace TodoApp.Services
 {
     internal class TaskService : ITaskService
     {

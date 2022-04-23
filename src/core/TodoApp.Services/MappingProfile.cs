@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using TodoApp.Models;
-using Entities = TodoApp.Domain.Entities;
+using TodoApp.Models.Dtos;
 
 namespace TodoApp.Services
 {

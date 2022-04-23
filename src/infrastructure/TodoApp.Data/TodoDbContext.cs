@@ -1,8 +1,7 @@
-﻿using Entities = TodoApp.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using TodoApp.Data.Configuration;
-using TodoApp.Domain.Entities;
+using TodoApp.Entities;
 
 namespace TodoApp.Data
 {

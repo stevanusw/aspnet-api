@@ -2,7 +2,7 @@
 using TodoApp.Contracts.Services;
 using TodoApp.Services;
 
-namespace Todo.Services
+namespace TodoApp.Services
 {
     public static class DependencyInjection
     {

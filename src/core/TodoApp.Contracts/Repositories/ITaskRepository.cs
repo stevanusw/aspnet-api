@@ -1,6 +1,4 @@
-﻿using Entities = TodoApp.Domain.Entities;
-
-namespace TodoApp.Contracts.Repositories
+﻿namespace TodoApp.Contracts.Repositories
 {
     public interface ITaskRepository
     {

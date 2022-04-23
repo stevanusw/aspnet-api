@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Linq;
 
-namespace TodoApp.Domain.Entities
+namespace TodoApp.Entities
 {
     public class Log
     {

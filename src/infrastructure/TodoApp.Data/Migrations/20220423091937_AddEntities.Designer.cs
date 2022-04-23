@@ -12,8 +12,8 @@ using TodoApp.Data;
 namespace TodoApp.Data.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20220417081645_AddSerilogTable")]
-    partial class AddSerilogTable
+    [Migration("20220423091937_AddEntities")]
+    partial class AddEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace TodoApp.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("TodoApp.Domain.Entities.Log", b =>
+            modelBuilder.Entity("TodoApp.Entities.Log", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace TodoApp.Data.Migrations
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("TodoApp.Domain.Entities.Task", b =>
+            modelBuilder.Entity("TodoApp.Entities.Task", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -128,7 +128,7 @@ namespace TodoApp.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TodoApp.Domain.Entities.Todo", b =>
+            modelBuilder.Entity("TodoApp.Entities.Todo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -182,9 +182,9 @@ namespace TodoApp.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TodoApp.Domain.Entities.Task", b =>
+            modelBuilder.Entity("TodoApp.Entities.Task", b =>
                 {
-                    b.HasOne("TodoApp.Domain.Entities.Todo", "TodoNavigation")
+                    b.HasOne("TodoApp.Entities.Todo", "TodoNavigation")
                         .WithMany("Tasks")
                         .HasForeignKey("TodoId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -193,7 +193,7 @@ namespace TodoApp.Data.Migrations
                     b.Navigation("TodoNavigation");
                 });
 
-            modelBuilder.Entity("TodoApp.Domain.Entities.Todo", b =>
+            modelBuilder.Entity("TodoApp.Entities.Todo", b =>
                 {
                     b.Navigation("Tasks");
                 });

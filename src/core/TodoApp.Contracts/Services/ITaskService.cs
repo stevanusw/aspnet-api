@@ -1,4 +1,4 @@
-﻿using TodoApp.Models;
+﻿using TodoApp.Models.Dtos;
 
 namespace TodoApp.Contracts.Services
 {
