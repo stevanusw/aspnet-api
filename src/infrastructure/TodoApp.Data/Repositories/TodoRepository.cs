@@ -19,5 +19,6 @@ namespace TodoApp.Data.Repositories
                 .SingleOrDefaultAsync();
 
         public void CreateTodo(Todo todo) => Create(todo);
+        public void DeleteTodo(Todo todo) => Delete(todo);
     }
 }

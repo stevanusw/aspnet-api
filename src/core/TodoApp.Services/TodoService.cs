@@ -55,5 +55,17 @@ namespace TodoApp.Services
 
             return dto;
         }
+
+        public async System.Threading.Tasks.Task DeleteTodoAsync(int id)
+        {
+            var todo = await _repository.Todo.GetTodoAsync(id, false);
+            if (todo == null)
+            {
+                throw new TodoNotFoundException(id);
+            }
+
+            _repository.Todo.DeleteTodo(todo);
+            await _repository.SaveAsync();
+        }
     }
 }

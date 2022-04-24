@@ -7,5 +7,6 @@ namespace TodoApp.Contracts.Services
         Task<IEnumerable<TodoDto>> GetTodosAsync();
         Task<TodoDto> GetTodoAsync(int id);
         Task<TodoDto> CreateTodoAsync(TodoForCreationDto todo);
+        Task DeleteTodoAsync(int id);
     }
 }

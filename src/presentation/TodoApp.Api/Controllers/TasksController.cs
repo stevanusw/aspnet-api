@@ -44,5 +44,13 @@ namespace TodoApp.Api.Controllers
                 },
                 model);
         }
+
+        [HttpDelete("{taskId:int}")]
+        public async Task<IActionResult> DeleteTask(int todoId, int taskId)
+        {
+            await _services.Task.DeleteTaskAsync(todoId, taskId);
+
+            return NoContent();
+        }
     }
 }

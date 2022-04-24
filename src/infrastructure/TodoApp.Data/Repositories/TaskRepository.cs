@@ -22,5 +22,7 @@ namespace TodoApp.Data.Repositories
             task.TodoId = todoId;
             Create(task);
         }
+
+        public void DeleteTask(Entities.Task task) => Delete(task);
     }
 }
