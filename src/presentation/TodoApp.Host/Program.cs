@@ -17,7 +17,11 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureCors();
 
 builder.Services.AddControllers()
-    .AddApplicationPart(typeof(AssemblyReference).Assembly);
+    .AddApplicationPart(typeof(AssemblyReference).Assembly)
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        //options.SuppressModelStateInvalidFilter = true;
+    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

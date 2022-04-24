@@ -43,5 +43,22 @@ namespace TodoApp.Services
 
             return dto;
         }
+
+        public async Task<TaskDto> CreateTaskAsync(int todoId, TaskForCreationDto task)
+        {
+            var todo = await _repository.Todo.GetTodoAsync(todoId, false);
+            if (todo == null)
+            {
+                throw new TodoNotFoundException(todoId);
+            }
+
+            var entity = _mapper.Map<Entities.Task>(task);
+            _repository.Task.CreateTask(todoId, entity);
+            await _repository.SaveAsync();
+
+            var dto = _mapper.Map<TaskDto>(entity);
+
+            return dto;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace TodoApp.Api.Controllers
             return CreatedAtRoute(nameof(GetTodo),
                 new
                 {
-                    Id = model.Id,
+                    id = model.Id,
                 },
                 model);
         }

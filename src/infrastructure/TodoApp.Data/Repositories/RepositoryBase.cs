@@ -18,8 +18,7 @@ namespace TodoApp.Data.Repositories
             DbContext.Set<T>().AsNoTracking() :
             DbContext.Set<T>();
 
-        public IQueryable<T> FindWhere(Expression<Func<T, bool>> expression, 
-            bool trackChanges) =>
+        public IQueryable<T> FindWhere(Expression<Func<T, bool>> expression, bool trackChanges) =>
             !trackChanges ?
             DbContext.Set<T>().Where(expression).AsNoTracking() :
             DbContext.Set<T>().Where(expression);

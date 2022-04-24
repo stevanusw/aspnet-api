@@ -4,5 +4,6 @@
     {
         Task<IEnumerable<Entities.Task>> GetTasksAsync(int todoId, bool trackChanges);
         Task<Entities.Task?> GetTaskAsync(int todoId, int taskId, bool trackChanges);
+        void CreateTask(int todoId, Entities.Task task);
     }
 }

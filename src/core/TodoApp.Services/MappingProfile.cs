@@ -11,6 +11,7 @@ namespace TodoApp.Services
             CreateMap<Entities.Task, TaskDto>();
 
             CreateMap<TodoForCreationDto, Entities.Todo>();
+            CreateMap<TaskForCreationDto, Entities.Task>();
         }
     }
 }

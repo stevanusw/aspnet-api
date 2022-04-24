@@ -16,5 +16,11 @@ namespace TodoApp.Data.Repositories
         public async Task<Entities.Task?> GetTaskAsync(int todoId, int taskId, bool trackChanges)
             => await FindWhere(t => t.TodoId == todoId && t.Id == taskId, false)
                 .SingleOrDefaultAsync();
+
+        public void CreateTask(int todoId, Entities.Task task)
+        {
+            task.TodoId = todoId;
+            Create(task);
+        }
     }
 }

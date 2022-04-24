@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TodoApp.Contracts.Services;
+using TodoApp.Models.Dtos;
 
 namespace TodoApp.Api.Controllers
 {
@@ -15,19 +16,33 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Gettasks(int todoId)
+        public async Task<IActionResult> GetTasks(int todoId)
         {
             var model = await _services.Task.GetTasksAsync(todoId);
 
             return Ok(model);
         }
 
-        [HttpGet("{taskId:int}")]
+        [HttpGet("{taskId:int}", Name = nameof(GetTask))]
         public async Task<IActionResult> GetTask(int todoId, int taskId)
         {
             var model = await _services.Task.GetTaskAsync(todoId, taskId);
 
             return Ok(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTask(int todoId, TaskForCreationDto task)
+        {
+            var model = await _services.Task.CreateTaskAsync(todoId, task);
+
+            return CreatedAtRoute(nameof(GetTask),
+                new
+                {
+                    todoId,
+                    taskId = model.Id,
+                },
+                model);
         }
     }
 }
