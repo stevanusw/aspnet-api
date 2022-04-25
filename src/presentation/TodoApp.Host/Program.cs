@@ -1,4 +1,5 @@
 using TodoApp.Api;
+using TodoApp.Api.Formatters;
 using TodoApp.Api.Middlewares;
 using TodoApp.Data;
 using TodoApp.Logging;
@@ -16,7 +17,10 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureProblemDetails(builder.Environment)
     .ConfigureCors();
 
-builder.Services.AddControllers()
+builder.Services.AddControllers(options =>
+    {
+        options.ConfigureJsonPatchInputFormatter();
+    })
     .AddApplicationPart(typeof(AssemblyReference).Assembly)
     .ConfigureApiBehaviorOptions(options =>
     {

@@ -32,9 +32,9 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTask(int todoId, TaskForCreationDto task)
+        public async Task<IActionResult> CreateTask(int todoId, TaskForCreationDto request)
         {
-            var model = await _services.Task.CreateTaskAsync(todoId, task);
+            var model = await _services.Task.CreateTaskAsync(todoId, request);
 
             return CreatedAtRoute(nameof(GetTask),
                 new
@@ -54,9 +54,9 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPut("{taskId:int}")]
-        public async Task<IActionResult> UpdateTask(int todoId, int taskId, TaskForUpdateDto task)
+        public async Task<IActionResult> UpdateTask(int todoId, int taskId, TaskForUpdateDto request)
         {
-            await _services.Task.UpdateTaskAsync(todoId, taskId, task);
+            await _services.Task.UpdateTaskAsync(todoId, taskId, request);
 
             return NoContent();
         }

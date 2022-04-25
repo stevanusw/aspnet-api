@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
 
@@ -32,9 +33,9 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTodo(TodoForCreationDto todo)
+        public async Task<IActionResult> CreateTodo(TodoForCreationDto request)
         {
-            var model = await _services.Todo.CreateTodoAsync(todo);
+            var model = await _services.Todo.CreateTodoAsync(request);
 
             return CreatedAtRoute(nameof(GetTodo),
                 new
@@ -53,9 +54,21 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateTodo(int id, TodoForUpdateDto todo)
+        public async Task<IActionResult> UpdateTodo(int id, TodoForUpdateDto request)
         {
-            await _services.Todo.UpdateTodoAsync(id, todo);
+            await _services.Todo.UpdateTodoAsync(id, request);
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> PartiallyUpdateTodo(int id, JsonPatchDocument<TodoForUpdateDto> request)
+        {
+            var model = await _services.Todo.GetTodoForPatchAsync(id);
+
+            request.ApplyTo(model.DtoToPatch);
+
+            await _services.Todo.UpdateTodoFromPatchAsync(model.DtoToPatch, model.Entity);
 
             return NoContent();
         }
