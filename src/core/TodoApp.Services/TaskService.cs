@@ -78,5 +78,23 @@ namespace TodoApp.Services
             _repository.Task.DeleteTask(task);
             await _repository.SaveAsync();
         }
+
+        public async Task UpdateTaskAsync(int todoId, int taskId, TaskForUpdateDto task)
+        {
+            var todo = await _repository.Todo.GetTodoAsync(todoId, false);
+            if (todo == null)
+            {
+                throw new TodoNotFoundException(todoId);
+            }
+
+            var entity = await _repository.Task.GetTaskAsync(todoId, taskId, true);
+            if (entity == null)
+            {
+                throw new TaskNotFoundException(taskId);
+            }
+
+            _mapper.Map(task, entity);
+            await _repository.SaveAsync();
+        }
     }
 }

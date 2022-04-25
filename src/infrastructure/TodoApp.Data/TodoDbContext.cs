@@ -34,7 +34,7 @@ namespace TodoApp.Data
                         .SetDefaultValueSql("SYSUTCDATETIME()");
 
                     entity.FindProperty(nameof(BaseEntity.LastUpdateDate))!
-                        .ValueGenerated = ValueGenerated.OnAddOrUpdate;
+                        .ValueGenerated = ValueGenerated.OnAdd;
 
                     entity.FindProperty(nameof(BaseEntity.Timestamp))!
                         .IsConcurrencyToken = true;
@@ -43,6 +43,20 @@ namespace TodoApp.Data
                         .ValueGenerated = ValueGenerated.OnAddOrUpdate;
                 }
             }
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var modifiedEntities = ChangeTracker.Entries()
+                .Where(e => e.State == EntityState.Modified && e.Entity is BaseEntity)
+                .Select(e => (BaseEntity)e.Entity);
+
+            foreach (var e in modifiedEntities)
+            {
+                e.LastUpdateDate = DateTime.UtcNow;
+            }
+
+            return base.SaveChangesAsync(cancellationToken);
         }
 
         public DbSet<Todo>? Todos { get; set; }

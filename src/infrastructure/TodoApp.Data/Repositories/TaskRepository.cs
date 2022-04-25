@@ -10,11 +10,11 @@ namespace TodoApp.Data.Repositories
         }
 
         public async Task<IEnumerable<Entities.Task>> GetTasksAsync(int todoId, bool trackChanges)
-            => await FindWhere(t => t.TodoId == todoId, false)
+            => await FindWhere(t => t.TodoId == todoId, trackChanges)
                 .ToListAsync();
 
         public async Task<Entities.Task?> GetTaskAsync(int todoId, int taskId, bool trackChanges)
-            => await FindWhere(t => t.TodoId == todoId && t.Id == taskId, false)
+            => await FindWhere(t => t.TodoId == todoId && t.Id == taskId, trackChanges)
                 .SingleOrDefaultAsync();
 
         public void CreateTask(int todoId, Entities.Task task)

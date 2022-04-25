@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Tasks = System.Threading.Tasks;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Entities;
@@ -56,7 +57,7 @@ namespace TodoApp.Services
             return dto;
         }
 
-        public async System.Threading.Tasks.Task DeleteTodoAsync(int id)
+        public async Tasks.Task DeleteTodoAsync(int id)
         {
             var todo = await _repository.Todo.GetTodoAsync(id, false);
             if (todo == null)
@@ -65,6 +66,18 @@ namespace TodoApp.Services
             }
 
             _repository.Todo.DeleteTodo(todo);
+            await _repository.SaveAsync();
+        }
+
+        public async Tasks.Task UpdateTodoAsync(int id, TodoForUpdateDto todo)
+        {
+            var entity = await _repository.Todo.GetTodoAsync(id, true);
+            if (entity == null)
+            {
+                throw new TodoNotFoundException(id);
+            }
+
+            _mapper.Map(todo, entity);
             await _repository.SaveAsync();
         }
     }

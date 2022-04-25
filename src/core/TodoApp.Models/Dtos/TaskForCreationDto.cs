@@ -1,4 +1,4 @@
 ﻿namespace TodoApp.Models.Dtos
 {
-    public record TaskForCreationDto(string name);
+    public record TaskForCreationDto(string Name);
 }

@@ -44,10 +44,18 @@ namespace TodoApp.Api.Controllers
                 model);
         }
 
-        [HttpDelete("{todoId:int}")]
-        public async Task<IActionResult> DeleteTodo(int todoId)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteTodo(int id)
         {
-            await _services.Todo.DeleteTodoAsync(todoId);
+            await _services.Todo.DeleteTodoAsync(id);
+
+            return NoContent();
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateTodo(int id, TodoForUpdateDto todo)
+        {
+            await _services.Todo.UpdateTodoAsync(id, todo);
 
             return NoContent();
         }

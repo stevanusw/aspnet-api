@@ -52,5 +52,13 @@ namespace TodoApp.Api.Controllers
 
             return NoContent();
         }
+
+        [HttpPut("{taskId:int}")]
+        public async Task<IActionResult> UpdateTask(int todoId, int taskId, TaskForUpdateDto task)
+        {
+            await _services.Task.UpdateTaskAsync(todoId, taskId, task);
+
+            return NoContent();
+        }
     }
 }
