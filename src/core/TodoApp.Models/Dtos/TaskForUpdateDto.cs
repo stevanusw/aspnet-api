@@ -1,4 +1,4 @@
 ﻿namespace TodoApp.Models.Dtos
 {
-    public record TaskForUpdateDto(string Name);
+    public record TaskForUpdateDto : TaskForManipulationDto;
 }

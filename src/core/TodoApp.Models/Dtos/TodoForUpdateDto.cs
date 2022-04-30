@@ -1,4 +1,4 @@
 ﻿namespace TodoApp.Models.Dtos
 {
-    public record TodoForUpdateDto(string Name, IEnumerable<TaskForCreationDto>? Tasks);
+    public record TodoForUpdateDto(bool IsCompleted) : TodoForManipulationDto;
 }

@@ -66,7 +66,12 @@ namespace TodoApp.Api.Controllers
         {
             var model = await _services.Todo.GetTodoForPatchAsync(id);
 
-            requestDto.ApplyTo(model.DtoToPatch);
+            requestDto.ApplyTo(model.DtoToPatch, ModelState);
+            TryValidateModel(model.DtoToPatch);
+            if (!ModelState.IsValid)
+            {
+                return UnprocessableEntity(ModelState);
+            }
 
             await _services.Todo.UpdateTodoFromPatchAsync(model.DtoToPatch, model.Entity);
 
