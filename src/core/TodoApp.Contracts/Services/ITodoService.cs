@@ -8,10 +8,10 @@ namespace TodoApp.Contracts.Services
     {
         Task<IEnumerable<TodoDto>> GetTodosAsync();
         Task<TodoDto> GetTodoAsync(int id);
-        Task<TodoDto> CreateTodoAsync(TodoForCreationDto request);
+        Task<TodoDto> CreateTodoAsync(TodoForCreationDto requestDto);
         Tasks.Task DeleteTodoAsync(int id);
-        Tasks.Task UpdateTodoAsync(int id, TodoForUpdateDto request);
+        Tasks.Task UpdateTodoAsync(int id, TodoForUpdateDto requestDto);
         Task<(TodoForUpdateDto DtoToPatch, Todo Entity)> GetTodoForPatchAsync(int id);
-        Tasks.Task UpdateTodoFromPatchAsync(TodoForUpdateDto request, Todo entity);
+        Tasks.Task UpdateTodoFromPatchAsync(TodoForUpdateDto requestDto, Todo entity);
     }
 }

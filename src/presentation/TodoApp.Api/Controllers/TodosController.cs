@@ -33,9 +33,9 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTodo(TodoForCreationDto request)
+        public async Task<IActionResult> CreateTodo(TodoForCreationDto requestDto)
         {
-            var model = await _services.Todo.CreateTodoAsync(request);
+            var model = await _services.Todo.CreateTodoAsync(requestDto);
 
             return CreatedAtRoute(nameof(GetTodo),
                 new
@@ -54,19 +54,19 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateTodo(int id, TodoForUpdateDto request)
+        public async Task<IActionResult> UpdateTodo(int id, TodoForUpdateDto requestDto)
         {
-            await _services.Todo.UpdateTodoAsync(id, request);
+            await _services.Todo.UpdateTodoAsync(id, requestDto);
 
             return NoContent();
         }
 
         [HttpPatch("{id:int}")]
-        public async Task<IActionResult> PartiallyUpdateTodo(int id, JsonPatchDocument<TodoForUpdateDto> request)
+        public async Task<IActionResult> PartiallyUpdateTodo(int id, JsonPatchDocument<TodoForUpdateDto> requestDto)
         {
             var model = await _services.Todo.GetTodoForPatchAsync(id);
 
-            request.ApplyTo(model.DtoToPatch);
+            requestDto.ApplyTo(model.DtoToPatch);
 
             await _services.Todo.UpdateTodoFromPatchAsync(model.DtoToPatch, model.Entity);
 

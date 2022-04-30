@@ -28,9 +28,8 @@ namespace TodoApp.Services
                 throw new TaskNotFoundException(taskId);
             }
 
-            var response = _mapper.Map<TaskDto>(entity);
-            
-            return response;
+            var responseDto = _mapper.Map<TaskDto>(entity);        
+            return responseDto;
         }
 
         public async Task<IEnumerable<TaskDto>> GetTasksAsync(int todoId)
@@ -39,12 +38,11 @@ namespace TodoApp.Services
 
             var entities = await _repository.Task.GetTasksAsync(todoId, false);
 
-            var response = _mapper.Map<IEnumerable<TaskDto>>(entities);
-
-            return response;
+            var responseDto = _mapper.Map<IEnumerable<TaskDto>>(entities);
+            return responseDto;
         }
 
-        public async Task<TaskDto> CreateTaskAsync(int todoId, TaskForCreationDto request)
+        public async Task<TaskDto> CreateTaskAsync(int todoId, TaskForCreationDto requestDto)
         {
             var todoEntity = await _repository.Todo.GetTodoAsync(todoId, false);
             if (todoEntity == null)
@@ -52,13 +50,12 @@ namespace TodoApp.Services
                 throw new TodoNotFoundException(todoId);
             }
 
-            var taskEntity = _mapper.Map<Entities.Task>(request);
+            var taskEntity = _mapper.Map<Entities.Task>(requestDto);
             _repository.Task.CreateTask(todoId, taskEntity);
             await _repository.SaveAsync();
 
-            var response = _mapper.Map<TaskDto>(taskEntity);
-
-            return response;
+            var responseDto = _mapper.Map<TaskDto>(taskEntity);
+            return responseDto;
         }
 
         public async Task DeleteTaskAsync(int todoId, int taskId)
@@ -79,7 +76,7 @@ namespace TodoApp.Services
             await _repository.SaveAsync();
         }
 
-        public async Task UpdateTaskAsync(int todoId, int taskId, TaskForUpdateDto request)
+        public async Task UpdateTaskAsync(int todoId, int taskId, TaskForUpdateDto requestDto)
         {
             var todoEntity = await _repository.Todo.GetTodoAsync(todoId, false);
             if (todoEntity == null)
@@ -93,7 +90,7 @@ namespace TodoApp.Services
                 throw new TaskNotFoundException(taskId);
             }
 
-            _mapper.Map(request, taskEntity);
+            _mapper.Map(requestDto, taskEntity);
             await _repository.SaveAsync();
         }
     }

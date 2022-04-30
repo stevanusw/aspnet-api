@@ -27,9 +27,9 @@ namespace TodoApp.Services
             _logger.LogInformation("Get Todos.");
 
             var entities = await _repository.Todo.GetTodosAsync(false);
-            var response = _mapper.Map<IEnumerable<TodoDto>>(entities);
+            var responseDto = _mapper.Map<IEnumerable<TodoDto>>(entities);
 
-            return response;
+            return responseDto;
         }
 
         public async Task<TodoDto> GetTodoAsync(int id)
@@ -40,21 +40,21 @@ namespace TodoApp.Services
                 throw new TodoNotFoundException(id);
             }
 
-            var response = _mapper.Map<TodoDto>(entity);
+            var responseDto = _mapper.Map<TodoDto>(entity);
 
-            return response;
+            return responseDto;
         }
 
-        public async Task<TodoDto> CreateTodoAsync(TodoForCreationDto request)
+        public async Task<TodoDto> CreateTodoAsync(TodoForCreationDto requestDto)
         {
-            var entity = _mapper.Map<Todo>(request);
+            var entity = _mapper.Map<Todo>(requestDto);
 
             _repository.Todo.CreateTodo(entity);
             await _repository.SaveAsync();
 
-            var response = _mapper.Map<TodoDto>(entity);
+            var responseDto = _mapper.Map<TodoDto>(entity);
 
-            return response;
+            return responseDto;
         }
 
         public async Tasks.Task DeleteTodoAsync(int id)
@@ -69,7 +69,7 @@ namespace TodoApp.Services
             await _repository.SaveAsync();
         }
 
-        public async Tasks.Task UpdateTodoAsync(int id, TodoForUpdateDto request)
+        public async Tasks.Task UpdateTodoAsync(int id, TodoForUpdateDto requestDto)
         {
             var entity = await _repository.Todo.GetTodoAsync(id, true);
             if (entity == null)
@@ -77,7 +77,7 @@ namespace TodoApp.Services
                 throw new TodoNotFoundException(id);
             }
 
-            _mapper.Map(request, entity);
+            _mapper.Map(requestDto, entity);
             await _repository.SaveAsync();
         }
 
@@ -94,9 +94,9 @@ namespace TodoApp.Services
             return (dtoToPatch, entity);
         }
 
-        public async Tasks.Task UpdateTodoFromPatchAsync(TodoForUpdateDto request, Todo entity)
+        public async Tasks.Task UpdateTodoFromPatchAsync(TodoForUpdateDto requestDto, Todo entity)
         {
-            _mapper.Map(request, entity);
+            _mapper.Map(requestDto, entity);
 
             await _repository.SaveAsync();
         }
