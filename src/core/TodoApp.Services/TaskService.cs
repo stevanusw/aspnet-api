@@ -22,13 +22,9 @@ namespace TodoApp.Services
 
         public async Task<TaskDto> GetTaskAsync(int todoId, int taskId)
         {
-            var entity = await _repository.Task.GetTaskAsync(todoId, taskId, false);
-            if (entity == null)
-            {
-                throw new TaskNotFoundException(taskId);
-            }
-
-            var responseDto = _mapper.Map<TaskDto>(entity);        
+            var entity = await GetTaskAndCheckIfItExists(todoId, taskId, false);
+            var responseDto = _mapper.Map<TaskDto>(entity);
+            
             return responseDto;
         }
 
@@ -37,61 +33,66 @@ namespace TodoApp.Services
             _logger.LogDebug(@"Get tasks with Todo Id: {todoId}.", todoId);
 
             var entities = await _repository.Task.GetTasksAsync(todoId, false);
-
             var responseDto = _mapper.Map<IEnumerable<TaskDto>>(entities);
+
             return responseDto;
         }
 
         public async Task<TaskDto> CreateTaskAsync(int todoId, TaskForCreationDto requestDto)
         {
-            var todoEntity = await _repository.Todo.GetTodoAsync(todoId, false);
-            if (todoEntity == null)
-            {
-                throw new TodoNotFoundException(todoId);
-            }
+            await CheckIfTodoExists(todoId, false);
 
             var taskEntity = _mapper.Map<Entities.Task>(requestDto);
+
             _repository.Task.CreateTask(todoId, taskEntity);
+
             await _repository.SaveAsync();
 
             var responseDto = _mapper.Map<TaskDto>(taskEntity);
+
             return responseDto;
         }
 
         public async Task DeleteTaskAsync(int todoId, int taskId)
         {
-            var todoEntity = await _repository.Todo.GetTodoAsync(todoId, false);
-            if (todoEntity == null)
-            {
-                throw new TodoNotFoundException(todoId);
-            }
+            await CheckIfTodoExists(todoId, false);
 
-            var taskEntity = await _repository.Task.GetTaskAsync(todoId, taskId, false);
-            if (taskEntity == null)
-            {
-                throw new TaskNotFoundException(taskId);
-            }
+            var entity = await GetTaskAndCheckIfItExists(todoId, taskId, false);
 
-            _repository.Task.DeleteTask(taskEntity);
+            _repository.Task.DeleteTask(entity);
+
             await _repository.SaveAsync();
         }
 
         public async Task UpdateTaskAsync(int todoId, int taskId, TaskForUpdateDto requestDto)
         {
-            var todoEntity = await _repository.Todo.GetTodoAsync(todoId, false);
-            if (todoEntity == null)
-            {
-                throw new TodoNotFoundException(todoId);
-            }
+            await CheckIfTodoExists(todoId, false);
 
-            var taskEntity = await _repository.Task.GetTaskAsync(todoId, taskId, true);
-            if (taskEntity == null)
+            var entity = await GetTaskAndCheckIfItExists(todoId, taskId, true);
+
+            _mapper.Map(requestDto, entity);
+
+            await _repository.SaveAsync();
+        }
+
+        private async Task CheckIfTodoExists(int id, bool trackChanges)
+        {
+            var entity = await _repository.Todo.GetTodoAsync(id, trackChanges);
+            if (entity == null)
+            {
+                throw new TodoNotFoundException(id);
+            }
+        }
+
+        private async Task<Entities.Task> GetTaskAndCheckIfItExists(int todoId, int taskId, bool trackChanges)
+        {
+            var entity = await _repository.Task.GetTaskAsync(todoId, taskId, true);
+            if (entity == null)
             {
                 throw new TaskNotFoundException(taskId);
             }
 
-            _mapper.Map(requestDto, taskEntity);
-            await _repository.SaveAsync();
+            return entity;
         }
     }
 }

@@ -34,12 +34,7 @@ namespace TodoApp.Services
 
         public async Task<TodoDto> GetTodoAsync(int id)
         {
-            var entity = await _repository.Todo.GetTodoAsync(id, false);
-            if (entity == null)
-            {
-                throw new TodoNotFoundException(id);
-            }
-
+            var entity = await GetTodoAndCheckIfItExists(id, false);
             var responseDto = _mapper.Map<TodoDto>(entity);
 
             return responseDto;
@@ -50,6 +45,7 @@ namespace TodoApp.Services
             var entity = _mapper.Map<Todo>(requestDto);
 
             _repository.Todo.CreateTodo(entity);
+            
             await _repository.SaveAsync();
 
             var responseDto = _mapper.Map<TodoDto>(entity);
@@ -59,36 +55,25 @@ namespace TodoApp.Services
 
         public async Tasks.Task DeleteTodoAsync(int id)
         {
-            var entity = await _repository.Todo.GetTodoAsync(id, false);
-            if (entity == null)
-            {
-                throw new TodoNotFoundException(id);
-            }
+            var entity = await GetTodoAndCheckIfItExists(id, false);
 
             _repository.Todo.DeleteTodo(entity);
+
             await _repository.SaveAsync();
         }
 
         public async Tasks.Task UpdateTodoAsync(int id, TodoForUpdateDto requestDto)
         {
-            var entity = await _repository.Todo.GetTodoAsync(id, true);
-            if (entity == null)
-            {
-                throw new TodoNotFoundException(id);
-            }
+            var entity = await GetTodoAndCheckIfItExists(id, true);
 
             _mapper.Map(requestDto, entity);
+
             await _repository.SaveAsync();
         }
 
         public async Task<(TodoForUpdateDto DtoToPatch, Todo Entity)> GetTodoForPatchAsync(int id)
         {
-            var entity = await _repository.Todo.GetTodoAsync(id, true);
-            if (entity == null)
-            {
-                throw new TodoNotFoundException(id);
-            }
-
+            var entity = await GetTodoAndCheckIfItExists(id, true);
             var dtoToPatch = _mapper.Map<TodoForUpdateDto>(entity);
 
             return (dtoToPatch, entity);
@@ -99,6 +84,17 @@ namespace TodoApp.Services
             _mapper.Map(requestDto, entity);
 
             await _repository.SaveAsync();
+        }
+
+        private async Task<Todo> GetTodoAndCheckIfItExists(int id, bool trackChanges)
+        {
+            var entity = await _repository.Todo.GetTodoAsync(id, trackChanges);
+            if (entity == null)
+            {
+                throw new TodoNotFoundException(id);
+            }
+
+            return entity;
         }
     }
 }
