@@ -1,7 +1,10 @@
 ﻿using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TodoApp.Models.Exceptions;
 
 namespace TodoApp.Api.Middlewares
 {
@@ -13,6 +16,8 @@ namespace TodoApp.Api.Middlewares
             return services.AddProblemDetails(options =>
             {
                 options.IncludeExceptionDetails = (ctx, ex) => env.IsDevelopment();
+                options.MapToStatusCode<TodoNotFoundException>(StatusCodes.Status404NotFound);
+                options.MapToStatusCode<TaskNotFoundException>(StatusCodes.Status404NotFound);
             });
         }
 
