@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Api.Filters;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
 
@@ -33,6 +34,7 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPost]
+        [ServiceFilter(typeof(RequestDtoValidationFilter))]
         public async Task<IActionResult> CreateTodo(TodoForCreationDto requestDto)
         {
             var model = await _services.Todo.CreateTodoAsync(requestDto);
@@ -54,6 +56,7 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpPut("{id:int}")]
+        [ServiceFilter(typeof(RequestDtoValidationFilter))]
         public async Task<IActionResult> UpdateTodo(int id, TodoForUpdateDto requestDto)
         {
             await _services.Todo.UpdateTodoAsync(id, requestDto);

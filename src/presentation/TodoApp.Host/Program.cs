@@ -15,6 +15,7 @@ builder.Host.ConfigureSerilog(builder.Configuration,
 builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureCoreServices()
     .ConfigureProblemDetails(builder.Environment)
+    .ConfigureFilters()
     .ConfigureCors();
 
 builder.Services.AddControllers(options =>
@@ -24,7 +25,7 @@ builder.Services.AddControllers(options =>
     .AddApplicationPart(typeof(AssemblyReference).Assembly)
     .ConfigureApiBehaviorOptions(options =>
     {
-        //options.SuppressModelStateInvalidFilter = true;
+        options.SuppressModelStateInvalidFilter = true;
     });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

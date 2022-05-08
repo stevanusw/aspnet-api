@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using TodoApp.Contracts.Services;
-using TodoApp.Services;
 
 namespace TodoApp.Services
 {
