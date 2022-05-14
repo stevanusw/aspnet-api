@@ -6,6 +6,8 @@ using TodoApp.Contracts.Services;
 using TodoApp.Entities;
 using TodoApp.Models.Dtos;
 using TodoApp.Models.Exceptions;
+using TodoApp.Models.Paging;
+using TodoApp.Models.Parameters;
 
 namespace TodoApp.Services
 {
@@ -22,14 +24,14 @@ namespace TodoApp.Services
             _logger = logger;
         }
 
-        public async Task<IEnumerable<TodoDto>> GetTodosAsync()
+        public async Task<(IEnumerable<TodoDto> Dto, PageInfo PageInfo)> GetTodosAsync(TodoParameters parameters)
         {
             _logger.LogInformation("Get Todos.");
 
-            var entities = await _repository.Todo.GetTodosAsync(false);
-            var responseDto = _mapper.Map<IEnumerable<TodoDto>>(entities);
+            var pagedEntities = await _repository.Todo.GetTodosAsync(parameters, false);
+            var responseDto = _mapper.Map<IEnumerable<TodoDto>>(pagedEntities);
 
-            return responseDto;
+            return (Dto: responseDto, PageInfo: pagedEntities.PageInfo);
         }
 
         public async Task<TodoDto> GetTodoAsync(int id)

@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoApp.Contracts.Repositories;
+using TodoApp.Models.Paging;
+using TodoApp.Models.Parameters;
 
 namespace TodoApp.Data.Repositories
 {
@@ -9,9 +11,18 @@ namespace TodoApp.Data.Repositories
         {
         }
 
-        public async Task<IEnumerable<Entities.Task>> GetTasksAsync(int todoId, bool trackChanges)
-            => await FindWhere(t => t.TodoId == todoId, trackChanges)
+        public async Task<PagedList<Entities.Task>> GetTasksAsync(int todoId, TaskParameters parameters, bool trackChanges)
+        {
+            var tasks = await FindWhere(t => t.TodoId == todoId, trackChanges)
+                .Skip((parameters.PageNo - 1) * parameters.PageSize)
+                .Take(parameters.PageSize)
                 .ToListAsync();
+
+            var count = await FindWhere(t => t.TodoId == todoId, false)
+                .CountAsync();
+
+            return new PagedList<Entities.Task>(tasks, parameters.PageNo, parameters.PageSize, count);
+        }
 
         public async Task<Entities.Task?> GetTaskAsync(int todoId, int taskId, bool trackChanges)
             => await FindWhere(t => t.TodoId == todoId && t.Id == taskId, trackChanges)

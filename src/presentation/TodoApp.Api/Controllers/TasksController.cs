@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TodoApp.Api.ActionResults;
 using TodoApp.Api.Filters;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
+using TodoApp.Models.Parameters;
 
 namespace TodoApp.Api.Controllers
 {
@@ -17,11 +19,11 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTasks(int todoId)
+        public async Task<IActionResult> GetTasks(int todoId, [FromQuery]TaskParameters parameters)
         {
-            var model = await _services.Task.GetTasksAsync(todoId);
+            var model = await _services.Task.GetTasksAsync(todoId, parameters);
 
-            return Ok(model);
+            return PagedOkFactory.Create(model.Dto, model.PageInfo);
         }
 
         [HttpGet("{taskId:int}", Name = nameof(GetTask))]

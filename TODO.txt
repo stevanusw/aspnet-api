@@ -2,3 +2,4 @@
 2. Integrate custom exceptions to ProblemDetails. => DONE
 3. Log unhandled exceptions. =>  Hellang middleware has logged exception from HTTP status 500.
 4. Disable auto generated response for invalid ModelState. => DONE
+5. Paging =>  DONE

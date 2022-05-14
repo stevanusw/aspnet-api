@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using TodoApp.Api.ActionResults;
 using TodoApp.Api.Filters;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
+using TodoApp.Models.Parameters;
 
 namespace TodoApp.Api.Controllers
 {
@@ -18,11 +20,11 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTodos()
+        public async Task<IActionResult> GetTodos([FromQuery]TodoParameters parameters)
         {
-            var model = await _services.Todo.GetTodosAsync();
+            var model = await _services.Todo.GetTodosAsync(parameters);
 
-            return Ok(model);
+            return PagedOkFactory.Create(model.Dto, model.PageInfo);
         }
 
         [HttpGet("{id}", Name = nameof(GetTodo))]

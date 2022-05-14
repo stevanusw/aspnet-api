@@ -4,6 +4,8 @@ using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
 using TodoApp.Models.Exceptions;
+using TodoApp.Models.Paging;
+using TodoApp.Models.Parameters;
 
 namespace TodoApp.Services
 {
@@ -28,14 +30,14 @@ namespace TodoApp.Services
             return responseDto;
         }
 
-        public async Task<IEnumerable<TaskDto>> GetTasksAsync(int todoId)
+        public async Task<(IEnumerable<TaskDto> Dto, PageInfo PageInfo)> GetTasksAsync(int todoId, TaskParameters parameters)
         {
             _logger.LogDebug(@"Get tasks with Todo Id: {todoId}.", todoId);
 
-            var entities = await _repository.Task.GetTasksAsync(todoId, false);
-            var responseDto = _mapper.Map<IEnumerable<TaskDto>>(entities);
+            var pagedEntities = await _repository.Task.GetTasksAsync(todoId, parameters, false);
+            var responseDto = _mapper.Map<IEnumerable<TaskDto>>(pagedEntities);
 
-            return responseDto;
+            return (Dto: responseDto, PageInfo: pagedEntities.PageInfo);
         }
 
         public async Task<TaskDto> CreateTaskAsync(int todoId, TaskForCreationDto requestDto)
