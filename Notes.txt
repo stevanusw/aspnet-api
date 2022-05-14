@@ -1,0 +1,11 @@
+1. Add migration:
+.\TodoApp\src\infrastructure\TodoApp.Data>dotnet ef migrations add AddAndSeedEntities -s ../../presentation/TodoApp.Host
+
+2. Update database:
+.\TodoApp\src\infrastructure\TodoApp.Data>dotnet ef database update -s ../../presentation/TodoApp.Host
+
+3. Drop database:
+.\TodoApp\src\infrastructure\TodoApp.Data>dotnet ef database drop -f -s ../../presentation/TodoApp.Host
+
+4. Install EF Core CLI:
+dotnet tool install -g dotnet-ef

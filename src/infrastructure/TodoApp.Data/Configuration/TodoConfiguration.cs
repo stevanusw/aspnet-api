@@ -20,16 +20,14 @@ namespace TodoApp.Data.Configuration
                 .OnDelete(DeleteBehavior.Cascade);
 
             #region Seed
-            builder.HasData(new Todo
+            for (var i = 1; i <= 100; i++)
             {
-                Id = 1,
-                Name = "Learn Javascript",
-            },
-            new Todo
-            {
-                Id = 2,
-                Name = "Learn ASP.NET",
-            });
+                builder.HasData(new Todo
+                {
+                    Id = i,
+                    Name = Guid.NewGuid().ToString(),
+                });
+            }
             #endregion
         }
     }

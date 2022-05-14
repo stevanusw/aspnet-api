@@ -19,30 +19,18 @@ namespace TodoApp.Data.Configuration
                 .OnDelete(DeleteBehavior.Cascade);
 
             #region Seed
-            builder.HasData(new Entities.Task
+            for (var i = 1; i <= 100; i++)
             {
-                Id = 1,
-                TodoId = 1,
-                Name = "Learn Ecmascript",
-            },
-            new Entities.Task
-            {
-                Id = 2,
-                TodoId = 1,
-                Name = "Learn Typescript",
-            },
-            new Entities.Task
-            {
-                Id = 3,
-                TodoId = 2,
-                Name = "Learn C#",
-            },
-            new Entities.Task
-            {
-                Id = 4,
-                TodoId = 2,
-                Name = "Learn SQL",
-            }); 
+                for (int j = 1; j <= 50; j++)
+                {
+                    builder.HasData(new Entities.Task
+                    {
+                        Id = j + (i - 1) * 50,
+                        TodoId = i,
+                        Name = Guid.NewGuid().ToString(),
+                    });
+                }
+            }
             #endregion
         }
     }
