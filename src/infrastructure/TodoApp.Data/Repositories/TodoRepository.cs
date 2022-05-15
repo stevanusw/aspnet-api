@@ -17,13 +17,15 @@ namespace TodoApp.Data.Repositories
         {
             var todos = await FindAll(trackChanges)
                 .Filter(parameters.IsCompleted)
-                .Search(parameters.Query)
+                .Search(parameters.Search)
+                .Sort(parameters.OrderBy)
                 .Skip((parameters.PageNo - 1) * parameters.PageSize)
                 .Take(parameters.PageSize)
                 .ToListAsync();
 
             var count = await FindAll(trackChanges)
                 .Filter(parameters.IsCompleted)
+                .Search(parameters.Search)
                 .CountAsync();
 
             return new PagedList<Todo>(todos, parameters.PageNo, parameters.PageSize, count);

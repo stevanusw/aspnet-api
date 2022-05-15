@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TodoApp.Api.ActionResults;
+using TodoApp.Api.Extensions;
 using TodoApp.Api.Filters;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
@@ -23,7 +23,7 @@ namespace TodoApp.Api.Controllers
         {
             var model = await _services.Task.GetTasksAsync(todoId, parameters);
 
-            return PagedOkFactory.Create(model.Dto, model.PageInfo);
+            return Response.ToPagedOk(model.Dto, model.PageInfo);
         }
 
         [HttpGet("{taskId:int}", Name = nameof(GetTask))]

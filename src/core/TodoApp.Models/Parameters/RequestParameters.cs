@@ -16,6 +16,7 @@
             }
         }
 
-        public string? Query { get; init; }
+        public string? Search { get; init; }
+        public string? OrderBy { get; init; }
     }
 }

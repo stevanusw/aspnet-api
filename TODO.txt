@@ -5,3 +5,5 @@
 5. Paging =>  DONE
 6. Filter => DONE
 7. Searching => DONE
+8. Sorting =>  DONE
+9. Data Shaping

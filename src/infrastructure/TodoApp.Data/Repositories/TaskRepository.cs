@@ -15,12 +15,14 @@ namespace TodoApp.Data.Repositories
         public async Task<PagedList<Entities.Task>> GetTasksAsync(int todoId, TaskParameters parameters, bool trackChanges)
         {
             var tasks = await FindWhere(t => t.TodoId == todoId, trackChanges)
-                .Search(parameters.Query)
+                .Search(parameters.Search)
+                .Sort(parameters.OrderBy)
                 .Skip((parameters.PageNo - 1) * parameters.PageSize)
                 .Take(parameters.PageSize)
                 .ToListAsync();
 
             var count = await FindWhere(t => t.TodoId == todoId, false)
+                .Search(parameters.Search)
                 .CountAsync();
 
             return new PagedList<Entities.Task>(tasks, parameters.PageNo, parameters.PageSize, count);

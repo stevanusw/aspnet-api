@@ -1,27 +1,34 @@
-﻿using TodoApp.Entities;
+﻿using System.Linq.Dynamic.Core;
+using TodoApp.Data.Extensions.Utilities;
 
 namespace TodoApp.Data.Extensions
 {
-    internal static class TodoExtensions
+    internal static class TaskExtensions
     {
-        internal static IQueryable<Todo> Filter(this IQueryable<Todo> todos, bool? isCompleted)
+        internal static IQueryable<Entities.Task> Search(this IQueryable<Entities.Task> tasks, string? query)
         {
-            if (isCompleted == null)
+            if (string.IsNullOrWhiteSpace(query))
             {
-                return todos;
+                return tasks;
             }
 
-            return todos.Where(t => t.IsCompleted == isCompleted);
+            return tasks.Where(t => t.Name!.ToLower().Contains(query.Trim().ToLower()));
         }
 
-        internal static IQueryable<Todo> Search(this IQueryable<Todo> todos, string? searchTerm)
+        internal static IQueryable<Entities.Task> Sort(this IQueryable<Entities.Task> tasks, string? query)
         {
-            if (string.IsNullOrWhiteSpace(searchTerm))
+            if (string.IsNullOrWhiteSpace(query))
             {
-                return todos;
+                return tasks;
             }
 
-            return todos.Where(t => t.Name!.ToLower().Contains(searchTerm.Trim().ToLower()));
+            var orderByQuery = QueryBuilder.CreateOrderByQuery<Entities.Task>(query);
+            if (string.IsNullOrWhiteSpace(orderByQuery))
+            {
+                return tasks;
+            }
+
+            return tasks.OrderBy(orderByQuery);
         }
     }
 }

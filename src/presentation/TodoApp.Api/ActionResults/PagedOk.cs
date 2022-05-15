@@ -23,12 +23,4 @@ namespace TodoApp.Api.ActionResults
             await new OkObjectResult(Items).ExecuteResultAsync(context);
         }
     }
-
-    public static class PagedOkFactory
-    {
-        public static PagedOk<T> Create<T>(T items, PageInfo pageInfo) where T : IEnumerable
-        {
-            return new PagedOk<T>(items, pageInfo);
-        }
-    }
 }
