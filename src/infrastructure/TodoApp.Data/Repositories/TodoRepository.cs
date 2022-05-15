@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoApp.Contracts.Repositories;
+using TodoApp.Data.Extensions;
 using TodoApp.Entities;
 using TodoApp.Models.Paging;
 using TodoApp.Models.Parameters;
@@ -14,14 +15,15 @@ namespace TodoApp.Data.Repositories
 
         public async Task<PagedList<Todo>> GetTodosAsync(TodoParameters parameters, bool trackChanges)
         {
-            var todos = await FindWhere(t => 
-                    parameters.IsCompleted.HasValue ? t.IsCompleted == parameters.IsCompleted : true, 
-                    trackChanges)
+            var todos = await FindAll(trackChanges)
+                .Filter(parameters.IsCompleted)
+                .Search(parameters.Query)
                 .Skip((parameters.PageNo - 1) * parameters.PageSize)
                 .Take(parameters.PageSize)
                 .ToListAsync();
 
-            var count = await FindAll(false)
+            var count = await FindAll(trackChanges)
+                .Filter(parameters.IsCompleted)
                 .CountAsync();
 
             return new PagedList<Todo>(todos, parameters.PageNo, parameters.PageSize, count);

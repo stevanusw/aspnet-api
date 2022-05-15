@@ -15,5 +15,7 @@
                 _pageSize = value > MaxPageSize ? MaxPageSize : value;
             }
         }
+
+        public string? Query { get; init; }
     }
 }

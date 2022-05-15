@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TodoApp.Contracts.Repositories;
+using TodoApp.Data.Extensions;
 using TodoApp.Models.Paging;
 using TodoApp.Models.Parameters;
 
@@ -14,6 +15,7 @@ namespace TodoApp.Data.Repositories
         public async Task<PagedList<Entities.Task>> GetTasksAsync(int todoId, TaskParameters parameters, bool trackChanges)
         {
             var tasks = await FindWhere(t => t.TodoId == todoId, trackChanges)
+                .Search(parameters.Query)
                 .Skip((parameters.PageNo - 1) * parameters.PageSize)
                 .Take(parameters.PageSize)
                 .ToListAsync();
