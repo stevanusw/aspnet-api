@@ -25,7 +25,8 @@ namespace TodoApp.Data.Configuration
                 builder.HasData(new Todo
                 {
                     Id = i,
-                    Name = Guid.NewGuid().ToString(),
+                    Name = $"Todo_{i}",
+                    IsCompleted = i % 2 != 0,
                 });
             }
             #endregion

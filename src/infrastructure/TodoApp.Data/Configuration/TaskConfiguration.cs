@@ -27,7 +27,7 @@ namespace TodoApp.Data.Configuration
                     {
                         Id = j + (i - 1) * 50,
                         TodoId = i,
-                        Name = Guid.NewGuid().ToString(),
+                        Name = $"Task_{i}_{j}",
                     });
                 }
             }
