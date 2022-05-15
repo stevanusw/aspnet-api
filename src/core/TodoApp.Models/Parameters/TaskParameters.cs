@@ -1,6 +1,4 @@
 ﻿namespace TodoApp.Models.Parameters
 {
-    public record TaskParameters : RequestParameters
-    {
-    }
+    public record TaskParameters : RequestParameters;
 }

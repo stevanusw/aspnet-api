@@ -1,6 +1,4 @@
 ﻿namespace TodoApp.Models.Parameters
 {
-    public record TodoParameters : RequestParameters
-    {
-    }
+    public record TodoParameters(bool? IsCompleted) : RequestParameters;
 }

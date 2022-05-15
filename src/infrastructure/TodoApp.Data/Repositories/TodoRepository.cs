@@ -14,7 +14,9 @@ namespace TodoApp.Data.Repositories
 
         public async Task<PagedList<Todo>> GetTodosAsync(TodoParameters parameters, bool trackChanges)
         {
-            var todos = await FindAll(trackChanges)
+            var todos = await FindWhere(t => 
+                    parameters.IsCompleted.HasValue ? t.IsCompleted == parameters.IsCompleted : true, 
+                    trackChanges)
                 .Skip((parameters.PageNo - 1) * parameters.PageSize)
                 .Take(parameters.PageSize)
                 .ToListAsync();
