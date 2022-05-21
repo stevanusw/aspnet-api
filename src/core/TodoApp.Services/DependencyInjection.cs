@@ -8,7 +8,8 @@ namespace TodoApp.Services
         public static IServiceCollection ConfigureCoreServices(this IServiceCollection services)
         {
             return services.AddScoped<IServiceManager, ServiceManager>()
-                .AddAutoMapper(typeof(MappingProfile));
+                .AddAutoMapper(typeof(MappingProfile))
+                .AddSingleton(typeof(IDataShaper<>), typeof(DataShaper<>));
         }
     }
 }

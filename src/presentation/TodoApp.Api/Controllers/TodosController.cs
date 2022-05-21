@@ -20,7 +20,7 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTodos([FromQuery]TodoParameters parameters)
+        public async Task<IActionResult> GetTodos([FromQuery] TodoParameters parameters)
         {
             var model = await _services.Todo.GetTodosAsync(parameters);
 
@@ -28,9 +28,9 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpGet("{id}", Name = nameof(GetTodo))]
-        public async Task<IActionResult> GetTodo(int id)
+        public async Task<IActionResult> GetTodo(int id, [FromQuery] TodoParameters parameters)
         {
-            var model = await _services.Todo.GetTodoAsync(id);
+            var model = await _services.Todo.GetTodoAsync(id, parameters);
 
             return Ok(model);
         }

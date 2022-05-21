@@ -18,5 +18,6 @@
 
         public string? Search { get; init; }
         public string? OrderBy { get; init; }
+        public string? Fields { get; init; }
     }
 }

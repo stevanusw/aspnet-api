@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
+using System.Dynamic;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
@@ -13,31 +14,35 @@ namespace TodoApp.Services
     {
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<TaskService> _logger;
+        private readonly IDataShaper<TaskDto> _dataShaper;
 
-        public TaskService(IRepositoryManager repository, IMapper mapper, ILogger logger)
+        public TaskService(IRepositoryManager repository, IMapper mapper, ILogger<TaskService> logger, IDataShaper<TaskDto> dataShaper)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
+            _dataShaper = dataShaper;
         }
 
-        public async Task<TaskDto> GetTaskAsync(int todoId, int taskId)
-        {
-            var entity = await GetTaskAndCheckIfItExists(todoId, taskId, false);
-            var responseDto = _mapper.Map<TaskDto>(entity);
-            
-            return responseDto;
-        }
-
-        public async Task<(IEnumerable<TaskDto> Dto, PageInfo PageInfo)> GetTasksAsync(int todoId, TaskParameters parameters)
+        public async Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTasksAsync(int todoId, TaskParameters parameters)
         {
             _logger.LogDebug(@"Get tasks with Todo Id: {todoId}.", todoId);
 
             var pagedEntities = await _repository.Task.GetTasksAsync(todoId, parameters, false);
             var responseDto = _mapper.Map<IEnumerable<TaskDto>>(pagedEntities);
+            var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields);
 
-            return (Dto: responseDto, PageInfo: pagedEntities.PageInfo);
+            return (Dto: shapedDto, PageInfo: pagedEntities.PageInfo);
+        }
+
+        public async Task<ExpandoObject> GetTaskAsync(int todoId, int taskId, TaskParameters parameters)
+        {
+            var entity = await GetTaskAndCheckIfItExists(todoId, taskId, false);
+            var responseDto = _mapper.Map<TaskDto>(entity);
+            var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields);
+
+            return shapedDto;
         }
 
         public async Task<TaskDto> CreateTaskAsync(int todoId, TaskForCreationDto requestDto)
