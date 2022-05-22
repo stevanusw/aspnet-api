@@ -9,7 +9,7 @@ namespace TodoApp.Contracts.Services
 {
     public interface ITodoService
     {
-        Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTodosAsync(TodoParameters parameters);
+        Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTodosAsync(LinkParameters linkParameters);
         Task<ExpandoObject> GetTodoAsync(int id, TodoParameters parameters);
         Task<TodoDto> CreateTodoAsync(TodoForCreationDto requestDto);
         Tasks.Task DeleteTodoAsync(int id);

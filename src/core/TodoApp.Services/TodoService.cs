@@ -18,33 +18,39 @@ namespace TodoApp.Services
         private readonly IMapper _mapper;
         private readonly ILogger<TodoService> _logger;
         private readonly IDataShaper<TodoDto> _dataShaper;
+        private readonly ILinksGenerator<TodoDto> _linksGenerator;
 
-        public TodoService(IRepositoryManager repository, IMapper mapper, ILogger<TodoService> logger, IDataShaper<TodoDto> dataShaper)
+        public TodoService(IRepositoryManager repository, 
+            IMapper mapper, 
+            ILogger<TodoService> logger, 
+            IDataShaper<TodoDto> dataShaper,
+            ILinksGenerator<TodoDto> linksGenerator)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
             _dataShaper = dataShaper;
+            _linksGenerator = linksGenerator;
         }
 
-        public async Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTodosAsync(TodoParameters parameters)
+        public async Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTodosAsync(LinkParameters linkParameters)
         {
             _logger.LogInformation("Get Todos.");
 
-            var pagedEntities = await _repository.Todo.GetTodosAsync(parameters, false);
-            var responseDto = _mapper.Map<IEnumerable<TodoDto>>(pagedEntities);
-            var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields);
+            var pagedEntities = await _repository.Todo.GetTodosAsync((TodoParameters)linkParameters.RequestParameters, false);
+            var dtos = _mapper.Map<IEnumerable<TodoDto>>(pagedEntities);
+            var responseDto = _linksGenerator.TryGenerateLinks(dtos, linkParameters.RequestParameters.Fields, linkParameters.HttpContext);
 
-            return (Dto: shapedDto, PageInfo: pagedEntities.PageInfo);
+            return (Dto: responseDto, PageInfo: pagedEntities.PageInfo);
         }
 
         public async Task<ExpandoObject> GetTodoAsync(int id, TodoParameters parameters)
         {
             var entity = await GetTodoAndCheckIfItExists(id, false);
-            var responseDto = _mapper.Map<TodoDto>(entity);
-            var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields);
+            var dto = _mapper.Map<TodoDto>(entity);
+            var responseDto = _dataShaper.Shape(dto, parameters.Fields);
 
-            return shapedDto;
+            return responseDto.Entity;
         }
 
         public async Task<TodoDto> CreateTodoAsync(TodoForCreationDto requestDto)

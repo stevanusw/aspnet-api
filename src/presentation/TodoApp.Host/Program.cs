@@ -16,6 +16,7 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureCoreServices()
     .ConfigureProblemDetails(builder.Environment)
     .ConfigureFilters()
+    .ConfigureUtilities()
     .ConfigureCors();
 
 builder.Services.AddControllers(options =>

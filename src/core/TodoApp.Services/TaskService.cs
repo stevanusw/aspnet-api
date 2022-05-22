@@ -31,7 +31,8 @@ namespace TodoApp.Services
 
             var pagedEntities = await _repository.Task.GetTasksAsync(todoId, parameters, false);
             var responseDto = _mapper.Map<IEnumerable<TaskDto>>(pagedEntities);
-            var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields);
+            var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields)
+                .Select(e => e.Entity);
 
             return (Dto: shapedDto, PageInfo: pagedEntities.PageInfo);
         }
@@ -42,7 +43,7 @@ namespace TodoApp.Services
             var responseDto = _mapper.Map<TaskDto>(entity);
             var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields);
 
-            return shapedDto;
+            return shapedDto.Entity;
         }
 
         public async Task<TaskDto> CreateTaskAsync(int todoId, TaskForCreationDto requestDto)

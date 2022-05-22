@@ -1,6 +1,7 @@
 ﻿using System.Dynamic;
 using System.Reflection;
 using TodoApp.Contracts.Services;
+using TodoApp.Models.Dtos;
 
 namespace TodoApp.Services;
 
@@ -14,18 +15,18 @@ public class DataShaper<T> : IDataShaper<T> where T : class
 		Properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 	}
 
-	public IEnumerable<ExpandoObject> Shape(IEnumerable<T> entities, string? fieldsString)
+	public IEnumerable<ShapedDto> Shape(IEnumerable<T> entities, string? fieldsString)
 	{
 		var requiredProperties = GetRequiredProperties(fieldsString);
 
 		return FetchData(entities, requiredProperties);
 	}
 
-	public ExpandoObject Shape(T ExpandoObject, string? fieldsString)
+	public ShapedDto Shape(T entity, string? fieldsString)
 	{
 		var requiredProperties = GetRequiredProperties(fieldsString);
 
-		return FetchDataForExpandoObject(ExpandoObject, requiredProperties);
+		return FetchDataForEntity(entity, requiredProperties);
 	}
 
 	private IEnumerable<PropertyInfo> GetRequiredProperties(string? fieldsString)
@@ -55,29 +56,34 @@ public class DataShaper<T> : IDataShaper<T> where T : class
 		return requiredProperties;
 	}
 
-	private IEnumerable<ExpandoObject> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> requiredProperties)
+	private IEnumerable<ShapedDto> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> requiredProperties)
 	{
-		var shapedData = new List<ExpandoObject>();
+		var shapedData = new List<ShapedDto>();
 
-		foreach (var ExpandoObject in entities)
+		foreach (var entity in entities)
 		{
-			var shapedObject = FetchDataForExpandoObject(ExpandoObject, requiredProperties);
+			var shapedObject = FetchDataForEntity(entity, requiredProperties);
 			shapedData.Add(shapedObject);
 		}
 
 		return shapedData;
 	}
 
-	private ExpandoObject FetchDataForExpandoObject(T ExpandoObject, IEnumerable<PropertyInfo> requiredProperties)
+	private ShapedDto FetchDataForEntity(T entity, IEnumerable<PropertyInfo> requiredProperties)
 	{
 		var shapedObject = new ExpandoObject();
 
 		foreach (var property in requiredProperties)
 		{
-			var objectPropertyValue = property.GetValue(ExpandoObject);
+			var objectPropertyValue = property.GetValue(entity);
 			shapedObject.TryAdd(property.Name, objectPropertyValue);
 		}
 
-		return shapedObject;
+		var objectProperty = entity.GetType().GetProperty("Id");
+		var id = (int)objectProperty!.GetValue(entity)!;
+
+		var shapedDto = new ShapedDto(id, shapedObject);
+
+		return shapedDto;
 	}
 }
