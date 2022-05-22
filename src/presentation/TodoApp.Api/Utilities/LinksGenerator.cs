@@ -34,11 +34,13 @@ namespace TodoApp.Api.Utilities
 
 		private bool ShouldGenerateLinks(HttpContext httpContext)
 		{
-			//var mediaType = (MediaTypeHeaderValue)httpContext.Items["AcceptHeaderMediaType"]!;
+			var mediaType = httpContext.Items["AcceptHeaderMediaType"] as MediaTypeHeaderValue;
+			if (mediaType == null)
+            {
+				return false;
+            }
 
-			//return mediaType.SubTypeWithoutSuffix.EndsWith("hateoas", StringComparison.InvariantCultureIgnoreCase);
-
-			return true;
+			return mediaType.SubTypeWithoutSuffix.EndsWith("hateoas", StringComparison.InvariantCultureIgnoreCase);
 		}
 
 		private IEnumerable<ExpandoObject> ReturnShapedEntities(IEnumerable<ShapedDto> shapedDtos) => shapedDtos.Select(d => d.Entity);

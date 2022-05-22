@@ -9,3 +9,5 @@
 
 4. Install EF Core CLI:
 dotnet tool install -g dotnet-ef
+
+5. Call HATEOAS with "application/vnd.todoapp.hateoas+json".

@@ -20,6 +20,7 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(MediaTypeExtractionFilter))]
         public async Task<IActionResult> GetTodos([FromQuery] TodoParameters parameters)
         {
             var linkParameters = new LinkParameters(parameters, HttpContext);
