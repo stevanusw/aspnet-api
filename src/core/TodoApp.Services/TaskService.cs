@@ -16,25 +16,30 @@ namespace TodoApp.Services
         private readonly IMapper _mapper;
         private readonly ILogger<TaskService> _logger;
         private readonly IDataShaper<TaskDto> _dataShaper;
+        private readonly ILinksGenerator<TaskDto> _linksGenerator;
 
-        public TaskService(IRepositoryManager repository, IMapper mapper, ILogger<TaskService> logger, IDataShaper<TaskDto> dataShaper)
+        public TaskService(IRepositoryManager repository, 
+            IMapper mapper, 
+            ILogger<TaskService> logger, 
+            IDataShaper<TaskDto> dataShaper,
+            ILinksGenerator<TaskDto> linksGenerator)
         {
             _repository = repository;
             _mapper = mapper;
             _logger = logger;
             _dataShaper = dataShaper;
+            _linksGenerator = linksGenerator;
         }
 
-        public async Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTasksAsync(int todoId, TaskParameters parameters)
+        public async Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTasksAsync(int todoId, LinkParameters linkParameters)
         {
             _logger.LogDebug(@"Get tasks with Todo Id: {todoId}.", todoId);
 
-            var pagedEntities = await _repository.Task.GetTasksAsync(todoId, parameters, false);
-            var responseDto = _mapper.Map<IEnumerable<TaskDto>>(pagedEntities);
-            var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields)
-                .Select(e => e.Entity);
+            var pagedEntities = await _repository.Task.GetTasksAsync(todoId, (TaskParameters)linkParameters.RequestParameters, false);
+            var dtos = _mapper.Map<IEnumerable<TaskDto>>(pagedEntities);
+            var responseDto = _linksGenerator.TryGenerateLinks(dtos, linkParameters.RequestParameters.Fields, linkParameters.HttpContext);
 
-            return (Dto: shapedDto, PageInfo: pagedEntities.PageInfo);
+            return (Dto: responseDto, PageInfo: pagedEntities.PageInfo);
         }
 
         public async Task<ExpandoObject> GetTaskAsync(int todoId, int taskId, TaskParameters parameters)

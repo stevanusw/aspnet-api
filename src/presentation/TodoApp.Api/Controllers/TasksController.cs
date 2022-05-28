@@ -19,9 +19,11 @@ namespace TodoApp.Api.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(MediaTypeExtractionFilter))]
         public async Task<IActionResult> GetTasks(int todoId, [FromQuery] TaskParameters parameters)
         {
-            var model = await _services.Task.GetTasksAsync(todoId, parameters);
+            var linkParameters = new LinkParameters(parameters, HttpContext);
+            var model = await _services.Task.GetTasksAsync(todoId, linkParameters);
 
             return Response.ToPagedOk(model.Dto, model.PageInfo);
         }

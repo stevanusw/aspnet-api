@@ -37,7 +37,7 @@ namespace TodoApp.Api.Controllers
             return Ok(model);
         }
 
-        [HttpPost(Name = nameof(CreateTodo))]
+        [HttpPost]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
         public async Task<IActionResult> CreateTodo(TodoForCreationDto requestDto)
         {
@@ -51,7 +51,7 @@ namespace TodoApp.Api.Controllers
                 model);
         }
 
-        [HttpDelete("{id:int}", Name = nameof(DeleteTodo))]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteTodo(int id)
         {
             await _services.Todo.DeleteTodoAsync(id);
@@ -59,7 +59,7 @@ namespace TodoApp.Api.Controllers
             return NoContent();
         }
 
-        [HttpPut("{id:int}", Name = nameof(UpdateTodo))]
+        [HttpPut("{id:int}")]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
         public async Task<IActionResult> UpdateTodo(int id, TodoForUpdateDto requestDto)
         {
@@ -68,7 +68,7 @@ namespace TodoApp.Api.Controllers
             return NoContent();
         }
 
-        [HttpPatch("{id:int}", Name = nameof(PartiallyUpdateTodo))]
+        [HttpPatch("{id:int}")]
         public async Task<IActionResult> PartiallyUpdateTodo(int id, JsonPatchDocument<TodoForUpdateDto> requestDto)
         {
             var model = await _services.Todo.GetTodoForPatchAsync(id);

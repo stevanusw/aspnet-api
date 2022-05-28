@@ -22,7 +22,8 @@ namespace TodoApp.Services
             _taskService = new Lazy<ITaskService>(() => new TaskService(repository, 
                 mapper,
                 (ILogger<TaskService>)provider.GetService(typeof(ILogger<TaskService>))!,
-                (IDataShaper<TaskDto>)provider.GetService(typeof(IDataShaper<TaskDto>))!));
+                (IDataShaper<TaskDto>)provider.GetService(typeof(IDataShaper<TaskDto>))!,
+                (ILinksGenerator<TaskDto>)provider.GetService(typeof(ILinksGenerator<TaskDto>))!));
         }
 
         public ITodoService Todo => _todoService.Value;

@@ -7,7 +7,7 @@ namespace TodoApp.Contracts.Services
 {
     public interface ITaskService
     {
-        Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTasksAsync(int todoId, TaskParameters parameters);
+        Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTasksAsync(int todoId, LinkParameters linkParameters);
         Task<ExpandoObject> GetTaskAsync(int todoId, int taskId, TaskParameters parameters);
         Task<TaskDto> CreateTaskAsync(int todoId, TaskForCreationDto requestDto);
         Task DeleteTaskAsync(int todoId, int taskId);

@@ -54,6 +54,7 @@ namespace TodoApp.Api.Utilities
 				var links = typeof(T).Name switch
                 {
 					nameof(TodoDto) => CreateLinksForTodo(httpContext, list[i].Id, fields),
+					nameof(TaskDto) => CreateLinksForTask(httpContext, list[i].Id, fields),
 					_ => throw new ArgumentException($"Unknown type {typeof(T).Name}")
                 };
 
@@ -75,6 +76,10 @@ namespace TodoApp.Api.Utilities
 					"self",
 					"GET"),
 
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TodosController.CreateTodo))!,
+					"create_todo",
+					"POST"),
+
 				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TodosController.DeleteTodo), values: new { id })!,
 					"delete_todo",
 					"DELETE"),
@@ -90,5 +95,32 @@ namespace TodoApp.Api.Utilities
 
 			return links;
 		}
-    }
+
+		private IEnumerable<Link> CreateLinksForTask(HttpContext httpContext, int taskId, string? fields)
+		{
+			fields ??= "";
+
+			var todoId = int.Parse(httpContext.GetRouteValue("todoId")!.ToString()!);
+			var links = new List<Link>
+			{
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.GetTask), values: new { todoId, taskId, fields })!,
+					"self",
+					"GET"),
+
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.CreateTask), values: new { todoId })!,
+					"create_task",
+					"POST"),
+
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.DeleteTask), values: new { todoId, taskId })!,
+					"delete_task",
+					"DELETE"),
+
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.UpdateTask), values: new { todoId, taskId })!,
+					"update_task",
+					"PUT"),
+			};
+
+			return links;
+		}
+	}
 }
