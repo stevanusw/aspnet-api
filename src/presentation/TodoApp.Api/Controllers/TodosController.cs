@@ -19,7 +19,16 @@ namespace TodoApp.Api.Controllers
             _services = services;
         }
 
+        [HttpOptions]
+        public IActionResult GetOptions()
+        {
+            Response.Headers.Add("Allow", "GET, HEAD, OPTIONS, POST, PUT, DELETE, PATCH");
+
+            return Ok();
+        }
+
         [HttpGet]
+        [HttpHead]
         [ServiceFilter(typeof(MediaTypeExtractionFilter))]
         public async Task<IActionResult> GetTodos([FromQuery] TodoParameters parameters)
         {
