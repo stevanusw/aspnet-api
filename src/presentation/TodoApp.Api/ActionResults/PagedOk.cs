@@ -18,7 +18,12 @@ namespace TodoApp.Api.ActionResults
 
         public async Task ExecuteResultAsync(ActionContext context)
         {
-            context.HttpContext.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PageInfo));
+            var serializeOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            };
+
+            context.HttpContext.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PageInfo, serializeOptions));
 
             await new OkObjectResult(Items).ExecuteResultAsync(context);
         }
