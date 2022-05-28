@@ -9,7 +9,7 @@ namespace TodoApp.Api.Controllers
 {
     [ApiController]
     [Route("api/todos/{todoId:int}/tasks")]
-    public class TasksController :ControllerBase
+    public class TasksController : ControllerBase
     {
         private readonly IServiceManager _services;
 

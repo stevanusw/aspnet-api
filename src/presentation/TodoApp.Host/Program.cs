@@ -17,7 +17,7 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureProblemDetails(builder.Environment)
     .ConfigureFilters()
     .ConfigureUtilities()
-    .ConfigureMediaTypes()
+    //.ConfigureMediaTypes()
     .ConfigureCors();
 
 builder.Services.AddControllers(options =>

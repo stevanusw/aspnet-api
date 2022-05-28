@@ -27,7 +27,7 @@ namespace TodoApp.Api.Controllers
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetTodos")]
         [HttpHead]
         [ServiceFilter(typeof(MediaTypeExtractionFilter))]
         public async Task<IActionResult> GetTodos([FromQuery] TodoParameters parameters)
@@ -46,7 +46,7 @@ namespace TodoApp.Api.Controllers
             return Ok(model);
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateTodo")]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
         public async Task<IActionResult> CreateTodo(TodoForCreationDto requestDto)
         {

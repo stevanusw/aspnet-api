@@ -11,3 +11,4 @@
 dotnet tool install -g dotnet-ef
 
 5. Call HATEOAS with "application/vnd.todoapp.hateoas+json".
+6. Call root document with "application/vnd.todoapp.apiroot+json".

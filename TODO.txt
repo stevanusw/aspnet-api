@@ -9,4 +9,4 @@
 9. Data Shaping => DONE
 10. HATEOAS => DONE
 11. Complete HATEOEAS for Tasks. => DONE
-12. HEAD & OPTIONS => DONE
+13. Root controller => DONE
