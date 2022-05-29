@@ -20,7 +20,7 @@ namespace TodoApp.Api.Utilities
 			_dataShaper = dataShaper;
 		}
 
-		public IEnumerable<ExpandoObject> TryGenerateLinks(IEnumerable<T> dtos, string? fields, HttpContext httpContext)
+		public LinkResponse TryGenerateLinks(IEnumerable<T> dtos, string? fields, HttpContext httpContext)
 		{
 			var shapedDtos = _dataShaper.Shape(dtos, fields);
 
@@ -29,7 +29,7 @@ namespace TodoApp.Api.Utilities
 				return ReturnLinkedDtos(shapedDtos, fields, httpContext);
 			}
 
-			return ReturnShapedEntities(shapedDtos);
+			return ReturnShapedDtos(shapedDtos);
 		}
 
 		private bool ShouldGenerateLinks(HttpContext httpContext)
@@ -43,27 +43,41 @@ namespace TodoApp.Api.Utilities
 			return mediaType.SubTypeWithoutSuffix.EndsWith("hateoas", StringComparison.InvariantCultureIgnoreCase);
 		}
 
-		private IEnumerable<ExpandoObject> ReturnShapedEntities(IEnumerable<ShapedDto> shapedDtos) => shapedDtos.Select(d => d.Entity);
+		private LinkResponse ReturnShapedDtos(IEnumerable<ShapedDto> shapedDtos) =>
+			new LinkResponse
+			{
+				ShapedDtos = shapedDtos.Select(d => d.Dto)
+			};
 
-		private IEnumerable<ExpandoObject> ReturnLinkedDtos(IEnumerable<ShapedDto> shapedDtos, string? fields, HttpContext httpContext)
+		private LinkResponse ReturnLinkedDtos(IEnumerable<ShapedDto> shapedDtos, string? fields, HttpContext httpContext)
 		{
 			var list = shapedDtos.ToList();
 
 			for (var i = 0; i < list.Count(); i++)
 			{
-				var links = typeof(T).Name switch
+				var dtoLinks = typeof(T).Name switch
                 {
 					nameof(TodoDto) => CreateLinksForTodo(httpContext, list[i].Id, fields),
 					nameof(TaskDto) => CreateLinksForTask(httpContext, list[i].Id, fields),
 					_ => throw new ArgumentException($"Unknown type {typeof(T).Name}")
                 };
 
-				list[i].Entity.TryAdd("Links", links);
+				list[i].Dto.TryAdd("Links", dtoLinks);
 			}
 
-			var entities = list.Select(d => d.Entity);
+			var dtos = list.Select(d => d.Dto);
+			var links = typeof(T).Name switch
+			{
+				nameof(TodoDto) => CreateLinksForTodos(httpContext, fields),
+				nameof(TaskDto) => CreateLinksForTasks(httpContext, fields),
+				_ => throw new ArgumentException($"Unknown type {typeof(T).Name}")
+			};
 
-			return entities;
+			return new LinkResponse
+			{
+				HasLinks = true,
+				LinkedDtos = new LinkCollectionWrapper<ExpandoObject>(dtos, links)
+			};
 		}
 
 		private IEnumerable<Link> CreateLinksForTodo(HttpContext httpContext, int id, string? fields)
@@ -76,10 +90,6 @@ namespace TodoApp.Api.Utilities
 					"self",
 					"GET"),
 
-				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TodosController.CreateTodo))!,
-					"create_todo",
-					"POST"),
-
 				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TodosController.DeleteTodo), values: new { id })!,
 					"delete_todo",
 					"DELETE"),
@@ -90,7 +100,25 @@ namespace TodoApp.Api.Utilities
 
 				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TodosController.PartiallyUpdateTodo), values: new { id })!,
 					"partially_update_todo",
-					"PATCH")
+					"PATCH"),
+			};
+
+			return links;
+		}
+
+		private IEnumerable<Link> CreateLinksForTodos(HttpContext httpContext, string? fields)
+		{
+			fields ??= "";
+
+			var links = new List<Link>
+			{
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TodosController.GetTodos), values: new { fields })!,
+					"self",
+					"GET"),
+
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TodosController.CreateTodo))!,
+					"create_todo",
+					"POST"),
 			};
 
 			return links;
@@ -107,17 +135,32 @@ namespace TodoApp.Api.Utilities
 					"self",
 					"GET"),
 
-				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.CreateTask), values: new { todoId })!,
-					"create_task",
-					"POST"),
-
 				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.DeleteTask), values: new { todoId, taskId })!,
 					"delete_task",
 					"DELETE"),
 
 				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.UpdateTask), values: new { todoId, taskId })!,
 					"update_task",
-					"PUT"),
+					"PUT")
+			};
+
+			return links;
+		}
+
+		private IEnumerable<Link> CreateLinksForTasks(HttpContext httpContext, string? fields)
+		{
+			fields ??= "";
+
+			var todoId = int.Parse(httpContext.GetRouteValue("todoId")!.ToString()!);
+			var links = new List<Link>
+			{
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.GetTasks), values: new { todoId, fields })!,
+					"self",
+					"GET"),
+
+				new Link(_linkGenerator.GetUriByAction(httpContext, nameof(TasksController.CreateTask), values: new { todoId })!,
+					"create_task",
+					"POST")
 			};
 
 			return links;

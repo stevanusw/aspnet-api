@@ -2,5 +2,5 @@
 
 namespace TodoApp.Models.Dtos
 {
-    public record ShapedDto(int Id, ExpandoObject Entity);
+    public record ShapedDto(int Id, ExpandoObject Dto);
 }

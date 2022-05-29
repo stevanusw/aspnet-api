@@ -6,6 +6,7 @@ using TodoApp.Contracts.Services;
 using TodoApp.Entities;
 using TodoApp.Models.Dtos;
 using TodoApp.Models.Exceptions;
+using TodoApp.Models.Links;
 using TodoApp.Models.Paging;
 using TodoApp.Models.Parameters;
 using Tasks = System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace TodoApp.Services
             _linksGenerator = linksGenerator;
         }
 
-        public async Task<(IEnumerable<ExpandoObject> Dto, PageInfo PageInfo)> GetTodosAsync(LinkParameters linkParameters)
+        public async Task<(LinkResponse Dto, PageInfo PageInfo)> GetTodosAsync(LinkParameters linkParameters)
         {
             _logger.LogInformation("Get Todos.");
 
@@ -47,10 +48,10 @@ namespace TodoApp.Services
         public async Task<ExpandoObject> GetTodoAsync(int id, TodoParameters parameters)
         {
             var entity = await GetTodoAndCheckIfItExists(id, false);
-            var dto = _mapper.Map<TodoDto>(entity);
-            var responseDto = _dataShaper.Shape(dto, parameters.Fields);
+            var responseDto = _mapper.Map<TodoDto>(entity);
+            var shapedDto = _dataShaper.Shape(responseDto, parameters.Fields);
 
-            return responseDto.Entity;
+            return shapedDto.Dto;
         }
 
         public async Task<TodoDto> CreateTodoAsync(TodoForCreationDto requestDto)

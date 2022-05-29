@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.Dynamic;
+using TodoApp.Models.Links;
 
 namespace TodoApp.Contracts.Services
 {
     public interface ILinksGenerator<T>
     {
-        IEnumerable<ExpandoObject> TryGenerateLinks(IEnumerable<T> dtos, string? fields, HttpContext httpContext);
+        LinkResponse TryGenerateLinks(IEnumerable<T> dtos, string? fields, HttpContext httpContext);
     }
 }

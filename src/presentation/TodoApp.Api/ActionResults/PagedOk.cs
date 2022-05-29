@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections;
 using System.Text.Json;
 using TodoApp.Models.Paging;
 
 namespace TodoApp.Api.ActionResults
 {
-    public class PagedOk<T> : IActionResult where T : IEnumerable
+    public class PagedOk<T> : IActionResult
     {
         public T Items { get; }
         public PageInfo PageInfo { get; }

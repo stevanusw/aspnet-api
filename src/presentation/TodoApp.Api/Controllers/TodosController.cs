@@ -34,8 +34,12 @@ namespace TodoApp.Api.Controllers
         {
             var linkParameters = new LinkParameters(parameters, HttpContext);
             var model = await _services.Todo.GetTodosAsync(linkParameters);
+            if (model.Dto.HasLinks)
+            {
+                return Response.ToPagedOk(model.Dto.LinkedDtos, model.PageInfo);
+            }
 
-            return Response.ToPagedOk(model.Dto, model.PageInfo);
+            return Response.ToPagedOk(model.Dto.ShapedDtos, model.PageInfo);
         }
 
         [HttpGet("{id}", Name = nameof(GetTodo))]
