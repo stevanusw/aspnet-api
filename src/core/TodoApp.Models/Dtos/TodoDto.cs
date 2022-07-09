@@ -1,4 +1,4 @@
 ﻿namespace TodoApp.Models.Dtos
 {
-    public record TodoDto(int Id, string Name, bool isCompleted, DateTime CreateDate);
+    public record TodoDto(int Id, string Name, bool isCompleted, DateTime CreateDateUtc);
 }

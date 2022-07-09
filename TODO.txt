@@ -1,12 +1,12 @@
 1. Integrate BeginScope to Serilog.
 2. Integrate custom exceptions to ProblemDetails. => DONE
-3. Log unhandled exceptions. =>  Hellang middleware has logged exception from HTTP status 500.
+3. Log unhandled exceptions. =>  Hellang middleware has logged exception from HTTP status 500. => DONE
 4. Disable auto generated response for invalid ModelState. => DONE
 5. Paging =>  DONE
 6. Filter => DONE
 7. Searching => DONE
 8. Sorting =>  DONE
-9. Data Shaping => DONE
+9. Data shaping => DONE
 10. HATEOAS => DONE
 11. Complete HATEOEAS for Tasks. => DONE
 13. Root controller => DONE
