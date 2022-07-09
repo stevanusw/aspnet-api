@@ -10,6 +10,7 @@ namespace TodoApp.Api.Controllers
 {
     [ApiController]
     [Route("api/todos")]
+    [ApiVersion("1.0")]
     public class TodosController : ControllerBase
     {
         private readonly IServiceManager _services;
@@ -29,7 +30,7 @@ namespace TodoApp.Api.Controllers
 
         [HttpGet(Name = "GetTodos")]
         [HttpHead]
-        [ServiceFilter(typeof(MediaTypeExtractionFilter))]
+        [ServiceFilter(typeof(MediaTypeResolverFilter))]
         public async Task<IActionResult> GetTodos([FromQuery] TodoParameters parameters)
         {
             var linkParameters = new LinkParameters(parameters, HttpContext);

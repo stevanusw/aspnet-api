@@ -9,6 +9,7 @@ namespace TodoApp.Api.Controllers
 {
     [ApiController]
     [Route("api/todos/{todoId:int}/tasks")]
+    [ApiVersion("1.0")]
     public class TasksController : ControllerBase
     {
         private readonly IServiceManager _services;
@@ -28,7 +29,7 @@ namespace TodoApp.Api.Controllers
 
         [HttpGet]
         [HttpHead]
-        [ServiceFilter(typeof(MediaTypeExtractionFilter))]
+        [ServiceFilter(typeof(MediaTypeResolverFilter))]
         public async Task<IActionResult> GetTasks(int todoId, [FromQuery] TaskParameters parameters)
         {
             var linkParameters = new LinkParameters(parameters, HttpContext);

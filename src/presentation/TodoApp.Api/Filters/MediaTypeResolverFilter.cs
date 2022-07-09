@@ -3,7 +3,7 @@ using Microsoft.Net.Http.Headers;
 
 namespace TodoApp.Api.Filters
 {
-    internal class MediaTypeExtractionFilter : IActionFilter
+    internal class MediaTypeResolverFilter : IActionFilter
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {

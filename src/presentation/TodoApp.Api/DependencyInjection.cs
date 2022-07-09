@@ -12,7 +12,7 @@ namespace TodoApp.Api
         public static IServiceCollection ConfigureFilters(this IServiceCollection services)
         {
             return services.AddScoped<RequestDtoValidationFilter>()
-                .AddScoped<MediaTypeExtractionFilter>();
+                .AddScoped<MediaTypeResolverFilter>();
         }
 
         public static IServiceCollection ConfigureUtilities(this IServiceCollection services)
@@ -32,6 +32,16 @@ namespace TodoApp.Api
                     systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.todoapp.hateoas+json");
                     systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.todoapp.apiroot");
                 }
+            });
+        }
+
+        public static IServiceCollection ConfigureApiVersioning(this IServiceCollection services)
+        {
+            return services.AddApiVersioning(options =>
+            {
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
             });
         }
     }

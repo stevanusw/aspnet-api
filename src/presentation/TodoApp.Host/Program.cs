@@ -17,7 +17,8 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureProblemDetails(builder.Environment)
     .ConfigureFilters()
     .ConfigureUtilities()
-    //.ConfigureMediaTypes()
+    //.ConfigureMediaTypes() // Seems not returning 406 Not Acceptable without it.
+    .ConfigureApiVersioning()
     .ConfigureCors();
 
 builder.Services.AddControllers(options =>
