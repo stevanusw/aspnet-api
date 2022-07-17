@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
+using TodoApp.Entities;
 using TodoApp.Models.Dtos;
 
 namespace TodoApp.Services
@@ -10,8 +13,13 @@ namespace TodoApp.Services
     {
         private readonly Lazy<ITodoService> _todoService;
         private readonly Lazy<ITaskService> _taskService;
+        private readonly Lazy<IAuthenticationService> _authenticationService;
 
-        public ServiceManager(IRepositoryManager repository, IMapper mapper, IServiceProvider provider)
+        public ServiceManager(IRepositoryManager repository, 
+            IMapper mapper, 
+            IServiceProvider provider,
+            IConfiguration configuration,
+            UserManager<User> userManager)
         {
             _todoService = new Lazy<ITodoService>(() => new TodoService(repository, 
                 mapper,
@@ -24,9 +32,16 @@ namespace TodoApp.Services
                 (ILogger<TaskService>)provider.GetService(typeof(ILogger<TaskService>))!,
                 (IDataShaper<TaskDto>)provider.GetService(typeof(IDataShaper<TaskDto>))!,
                 (ILinksGenerator<TaskDto>)provider.GetService(typeof(ILinksGenerator<TaskDto>))!));
+
+            _authenticationService = new Lazy<IAuthenticationService>(() =>
+                new AuthenticationService((ILogger<AuthenticationService>)provider.GetService(typeof(ILogger<AuthenticationService>))!,
+                mapper,
+                userManager,
+                configuration));
         }
 
         public ITodoService Todo => _todoService.Value;
         public ITaskService Task => _taskService.Value;
+        public IAuthenticationService Authentication => _authenticationService.Value;
     }
 }

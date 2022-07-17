@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using TodoApp.Data.Configuration;
 using TodoApp.Entities;
 
 namespace TodoApp.Data
 {
-    internal class TodoDbContext : DbContext
+    internal class TodoDbContext : IdentityDbContext<User>
     {
         public TodoDbContext(DbContextOptions options) : base(options)
         {

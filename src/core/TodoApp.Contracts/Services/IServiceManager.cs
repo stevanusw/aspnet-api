@@ -4,5 +4,6 @@
     {
         ITodoService Todo { get; }
         ITaskService Task { get; }
+        IAuthenticationService Authentication { get; }
     }
 }

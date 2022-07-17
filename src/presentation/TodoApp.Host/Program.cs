@@ -19,7 +19,9 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureUtilities()
     //.ConfigureMediaTypes() // Seems not returning 406 Not Acceptable without it.
     .ConfigureApiVersioning()
-    .ConfigureCors();
+    .ConfigureCors()
+    .ConfigureIdentity()
+    .AddAuthentication();
 
 builder.Services.AddControllers(options =>
     {
@@ -42,15 +44,18 @@ app.AddProblemDetails();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger()
+        .UseSwaggerUI();
+}
+else 
+{
+    app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-
-app.UseCors("CorsPolicy");
-
-app.UseAuthorization();
+    app.UseHttpsRedirection()
+    .UseCors("CorsPolicy")
+    .UseAuthentication()
+    .UseAuthorization();
 
 app.MapControllers();
 

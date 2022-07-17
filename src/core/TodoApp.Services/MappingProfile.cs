@@ -15,6 +15,8 @@ namespace TodoApp.Services
             CreateMap<TodoForUpdateDto, Entities.Todo>()
                 .ReverseMap();
             CreateMap<TaskForUpdateDto, Entities.Task>();
+
+            CreateMap<UserForRegistrationDto, Entities.User>();
         }
     }
 }

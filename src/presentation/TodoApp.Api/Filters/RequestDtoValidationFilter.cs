@@ -7,7 +7,16 @@ namespace TodoApp.Api.Filters
     internal class RequestDtoValidationFilter : IActionFilter
     {
         public void OnActionExecuted(ActionExecutedContext context)
-        {           
+        {
+            if (!context.ModelState.IsValid)
+            {
+                context.Result = new UnprocessableEntityObjectResult(new ValidationProblemDetails(context.ModelState)
+                {
+                    Type = $"https://datatracker.ietf.org/doc/html/rfc4918#section-11.2",
+                    Status = StatusCodes.Status422UnprocessableEntity,
+                    Instance = context.HttpContext.Request.Path,
+                });
+            }
         }
 
         public void OnActionExecuting(ActionExecutingContext context)

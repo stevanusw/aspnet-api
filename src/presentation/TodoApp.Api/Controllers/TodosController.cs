@@ -15,10 +15,7 @@ namespace TodoApp.Api.Controllers
     {
         private readonly IServiceManager _services;
 
-        public TodosController(IServiceManager services)
-        {
-            _services = services;
-        }
+        public TodosController(IServiceManager services) => _services = services;
 
         [HttpOptions]
         public IActionResult GetOptions()
