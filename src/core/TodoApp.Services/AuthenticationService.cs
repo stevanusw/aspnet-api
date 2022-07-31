@@ -135,13 +135,13 @@ namespace TodoApp.Services
 
         public async Task<TokenDto> RefreshTokenAsync(TokenForRefreshDto requestDto)
         {
-            var user = await _userService.GetUserByRefreshTokenAsync(requestDto.RefreshToken!);
+            var user = await _userService.GetUserByRefreshTokenAsync(requestDto.RefreshToken!, true);
             if (user.RefreshTokenExpiryTimeUtc <= DateTime.UtcNow)
             {
                 throw new RefreshTokenBadRequestException();
             }
 
-            _user = await _userManager.FindByIdAsync(user.Id);
+            _user = user;
 
             return await CreateTokenAsync(false);
         }
