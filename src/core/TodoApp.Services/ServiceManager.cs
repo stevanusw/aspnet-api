@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Entities;
+using TodoApp.Models.Configuration;
 using TodoApp.Models.Dtos;
 
 namespace TodoApp.Services
@@ -18,8 +20,8 @@ namespace TodoApp.Services
         public ServiceManager(IRepositoryManager repository, 
             IMapper mapper, 
             IServiceProvider provider,
-            IConfiguration configuration,
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IOptions<JwtConfiguration> jwtConfiguration)
         {
             _todoService = new Lazy<ITodoService>(() => new TodoService(repository, 
                 mapper,
@@ -39,8 +41,8 @@ namespace TodoApp.Services
                 new AuthenticationService((ILogger<AuthenticationService>)provider.GetService(typeof(ILogger<AuthenticationService>))!,
                 mapper,
                 userManager,
-                configuration,
-                userService));
+                userService,
+                jwtConfiguration.Value));
         }
 
         public ITodoService Todo => _todoService.Value;

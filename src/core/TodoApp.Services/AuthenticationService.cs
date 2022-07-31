@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using TodoApp.Contracts.Services;
 using TodoApp.Entities;
+using TodoApp.Models.Configuration;
 using TodoApp.Models.Dtos;
 using TodoApp.Models.Exceptions;
 
@@ -19,22 +20,22 @@ namespace TodoApp.Services
         private readonly ILogger<AuthenticationService> _logger;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
-        private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
+        private readonly JwtConfiguration _jwtConfiguration;
 
         private User? _user;
 
         public AuthenticationService(ILogger<AuthenticationService> logger, 
             IMapper mapper, 
             UserManager<User> userManager, 
-            IConfiguration configuration,
-            IUserService userService)
+            IUserService userService,
+            JwtConfiguration jwtConfiguration)
         {
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
-            _configuration = configuration;
             _userService = userService;
+            _jwtConfiguration = jwtConfiguration;
         }
 
         public async Task<IdentityResult> RegisterUserAsync(UserForRegistrationDto requestDto)
@@ -83,8 +84,7 @@ namespace TodoApp.Services
 
             SigningCredentials GetSigningCredentials()
             {
-                var jwtSettings = _configuration.GetSection("JwtSettings");
-                var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["secret"]));
+                var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtConfiguration.Secret!));
 
                 return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
             }
@@ -107,13 +107,12 @@ namespace TodoApp.Services
 
             JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
             {
-                var jwtSettings = _configuration.GetSection("JwtSettings");
                 var tokenOptions = new JwtSecurityToken
                     (
-                        issuer: jwtSettings["issuer"],
-                        audience: jwtSettings["audience"],
+                        issuer: _jwtConfiguration.Issuer,
+                        audience: _jwtConfiguration.Audience,
                         claims: claims,
-                        expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["expiresMins"])),
+                        expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_jwtConfiguration.ExpiresMins)),
                         signingCredentials: signingCredentials
                     );
 

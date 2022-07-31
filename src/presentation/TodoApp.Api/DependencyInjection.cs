@@ -11,6 +11,7 @@ using TodoApp.Api.Utilities;
 using TodoApp.Contracts.Services;
 using TodoApp.Data;
 using TodoApp.Entities;
+using TodoApp.Models.Configuration;
 
 namespace TodoApp.Api
 {
@@ -84,11 +85,12 @@ namespace TodoApp.Api
         {
             var jwtSettings = configuration.GetSection("JwtSettings");
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            services.Configure<JwtConfiguration>(jwtSettings)
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters

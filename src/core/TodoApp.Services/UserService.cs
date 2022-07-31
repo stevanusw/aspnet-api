@@ -19,7 +19,7 @@ namespace TodoApp.Services
             var user = await _repository.User.GetUserByRefreshTokenAsync(refreshToken, trackChanges);
             if (user == null)
             {
-                throw new UserNotFoundException();
+                throw new RefreshTokenNotFoundException();
             }
 
             return user;
