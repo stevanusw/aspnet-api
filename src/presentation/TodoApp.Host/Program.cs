@@ -4,7 +4,6 @@ using TodoApp.Api.Middlewares;
 using TodoApp.Data;
 using TodoApp.Logging;
 using TodoApp.Services;
-using TodoApp.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +20,7 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureApiVersioning()
     .ConfigureCors()
     .ConfigureIdentity()
-    .AddAuthentication();
+    .ConfigureJWT(builder.Configuration);
 
 builder.Services.AddControllers(options =>
     {

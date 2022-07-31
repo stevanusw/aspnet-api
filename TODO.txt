@@ -12,4 +12,6 @@
 13. Root controller => DONE
 14. Add link wrapper for HATEOAS. => DONE
 15. Add API versioning => DONE
-16. Add Identity
+16. Add Identity => DONE
+17. Add JWT, AccessToken & RefreshToken => DONE
+18. Add Transaction

@@ -12,8 +12,8 @@ using TodoApp.Data;
 namespace TodoApp.Data.Migrations
 {
     [DbContext(typeof(TodoDbContext))]
-    [Migration("20220716094310_SeedIdentityRoles")]
-    partial class SeedIdentityRoles
+    [Migration("20220730034951_SeedIdentityRolesAndAddAdditionalUserFieldsForRefreshToken")]
+    partial class SeedIdentityRolesAndAddAdditionalUserFieldsForRefreshToken
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -53,15 +53,15 @@ namespace TodoApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8feb4a1f-365f-496b-86c7-226cd33823e3",
-                            ConcurrencyStamp = "e3fce01d-4479-4f2f-aa08-8080ac01d076",
+                            Id = "2b07d854-aaae-41aa-9b19-e9c63feafd85",
+                            ConcurrencyStamp = "1c594fbb-c957-4858-b1eb-6e3b5a472901",
                             Name = "Member",
                             NormalizedName = "MEMBER"
                         },
                         new
                         {
-                            Id = "ebce42c4-3c5a-4ed0-9d62-31481981bb95",
-                            ConcurrencyStamp = "692e499a-bfa8-4bdd-858e-0ebf1540a659",
+                            Id = "40c8001d-6cc3-4219-8415-b1919e4035d3",
+                            ConcurrencyStamp = "a6deecca-9d6b-436c-b5a8-215238315fdb",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -41134,6 +41134,13 @@ namespace TodoApp.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("RefreshToken")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryTimeUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

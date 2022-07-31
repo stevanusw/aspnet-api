@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	<UserSecretsId>095ef2cc-f34d-407e-8c8a-5629ab35ee69</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\TodoApp.Contracts\TodoApp.Contracts.csproj" />
-    <ProjectReference Include="..\..\core\TodoApp.Services\TodoApp.Services.csproj" />
-    <ProjectReference Include="..\..\infrastructure\TodoApp.Data\TodoApp.Data.csproj" />
-    <ProjectReference Include="..\..\infrastructure\TodoApp.Logging\TodoApp.Logging.csproj" />
     <ProjectReference Include="..\TodoApp.Api\TodoApp.Api.csproj" />
   </ItemGroup>
 

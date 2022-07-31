@@ -32,5 +32,19 @@ namespace TodoApp.Api.Controllers
 
             return StatusCode((int)HttpStatusCode.Created);
         }
+
+        [HttpPost("login")]
+        [ServiceFilter(typeof(RequestDtoValidationFilter))]
+        public async Task<IActionResult> Login(UserForAuthenticationDto requestDto)
+        {
+            if (!await _services.Authentication.ValidateUserAsync(requestDto))
+            {
+                return Unauthorized();
+            }
+
+            var model = await _services.Authentication.CreateTokenAsync(populateExpiration: true);
+
+            return Ok(model);
+        }
     }
 }

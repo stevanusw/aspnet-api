@@ -15,6 +15,9 @@ namespace TodoApp.Data.Configuration
             builder.Property(e => e.LastName)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.Property(e => e.RefreshToken)
+                .HasMaxLength(256);
         }
     }
 }

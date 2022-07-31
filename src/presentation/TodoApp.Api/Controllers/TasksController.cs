@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Extensions;
 using TodoApp.Api.Filters;
 using TodoApp.Contracts.Services;
@@ -27,6 +28,7 @@ namespace TodoApp.Api.Controllers
         [HttpGet]
         [HttpHead]
         [ServiceFilter(typeof(MediaTypeResolverFilter))]
+        [Authorize]
         public async Task<IActionResult> GetTasks(int todoId, [FromQuery] TaskParameters parameters)
         {
             var linkParameters = new LinkParameters(parameters, HttpContext);

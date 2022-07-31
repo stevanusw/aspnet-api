@@ -15,8 +15,8 @@ namespace TodoApp.Api.Middlewares
             return services.AddProblemDetails(options =>
             {
                 options.IncludeExceptionDetails = (ctx, ex) => env.IsDevelopment();
-                options.MapToStatusCode<TodoNotFoundException>(StatusCodes.Status404NotFound);
-                options.MapToStatusCode<TaskNotFoundException>(StatusCodes.Status404NotFound);
+                options.MapToStatusCode<NotFoundException>(StatusCodes.Status404NotFound);
+                options.MapToStatusCode<BadRequestException>(StatusCodes.Status400BadRequest);
             });
         }
 

@@ -4,6 +4,7 @@
     {
         ITodoRepository Todo { get; }
         ITaskRepository Task { get; }
+        IUserRepository User { get; }
         Task SaveAsync();
     }
 }

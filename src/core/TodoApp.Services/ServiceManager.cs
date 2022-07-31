@@ -33,11 +33,14 @@ namespace TodoApp.Services
                 (IDataShaper<TaskDto>)provider.GetService(typeof(IDataShaper<TaskDto>))!,
                 (ILinksGenerator<TaskDto>)provider.GetService(typeof(ILinksGenerator<TaskDto>))!));
 
+            var userService = new UserService(repository);
+
             _authenticationService = new Lazy<IAuthenticationService>(() =>
                 new AuthenticationService((ILogger<AuthenticationService>)provider.GetService(typeof(ILogger<AuthenticationService>))!,
                 mapper,
                 userManager,
-                configuration));
+                configuration,
+                userService));
         }
 
         public ITodoService Todo => _todoService.Value;
