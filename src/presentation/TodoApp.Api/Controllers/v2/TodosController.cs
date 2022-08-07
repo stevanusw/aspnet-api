@@ -8,6 +8,8 @@ namespace TodoApp.Api.Controllers.v2
     [ApiController]
     [Route("api/{v:apiVersion}/todos")]
     [ApiVersion("2.0")]
+    [ApiExplorerSettings(GroupName = "v2")]
+    // Without V2, api-supported-versions returns 1.0, 2.0
     public class TodosV2Controller : ControllerBase
     {
         private readonly IServiceManager _services;

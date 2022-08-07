@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Extensions;
 using TodoApp.Api.Filters;
@@ -11,6 +12,7 @@ namespace TodoApp.Api.Controllers
     [ApiController]
     [Route("api/todos")]
     [ApiVersion("1.0")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class TodosController : ControllerBase
     {
         private readonly IServiceManager _services;
@@ -25,9 +27,15 @@ namespace TodoApp.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Get the list of all todos
+        /// </summary>
+        /// <param name="parameters">Query string parameters</param>
+        /// <returns>The todos list</returns>
         [HttpGet(Name = "GetTodos")]
         [HttpHead]
         [ServiceFilter(typeof(MediaTypeResolverFilter))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TodoDto>))]
         public async Task<IActionResult> GetTodos([FromQuery] TodoParameters parameters)
         {
             var linkParameters = new LinkParameters(parameters, HttpContext);
@@ -48,8 +56,17 @@ namespace TodoApp.Api.Controllers
             return Ok(model);
         }
 
+        /// <summary>
+        /// Creates a newly created todo
+        /// </summary>
+        /// <param name="requestDto"></param>
+        /// <returns>A newly created todo</returns>
+        /// <response code="201">Returns the newly created todo</response>
+        /// <response code="400">If the model is null</response>
+        /// <response code="422">If the model is invalid</response>
         [HttpPost(Name = "CreateTodo")]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TodoDto))]
         public async Task<IActionResult> CreateTodo(TodoForCreationDto requestDto)
         {
             var model = await _services.Todo.CreateTodoAsync(requestDto);

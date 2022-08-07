@@ -20,7 +20,8 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureApiVersioning()
     .ConfigureCors()
     .ConfigureIdentity()
-    .ConfigureJWT(builder.Configuration);
+    .ConfigureJWT(builder.Configuration)
+    .ConfigureSwagger();
 
 builder.Services.AddControllers(options =>
     {
@@ -44,14 +45,18 @@ app.AddProblemDetails();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger()
-        .UseSwaggerUI();
+        .UseSwaggerUI(options =>
+        {
+            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1");
+            options.SwaggerEndpoint("/swagger/v2/swagger.json", "Todo API v2");
+        });
 }
 else 
 {
     app.UseHsts();
 }
 
-    app.UseHttpsRedirection()
+app.UseHttpsRedirection()
     .UseCors("CorsPolicy")
     .UseAuthentication()
     .UseAuthorization();

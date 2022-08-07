@@ -14,5 +14,6 @@
 15. Add API versioning => DONE
 16. Add Identity => DONE
 17. Add JWT, AccessToken & RefreshToken => DONE
-18. Add Transaction
+18. Add transaction
 19. Use IOptions => DONE
+20. Add Swagger => DONE
