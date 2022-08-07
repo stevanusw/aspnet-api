@@ -33,9 +33,9 @@ namespace TodoApp.Api.Controllers
             return StatusCode((int)HttpStatusCode.Created);
         }
 
-        [HttpPost("login")]
+        [HttpPost("token")]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
-        public async Task<IActionResult> Login(UserForAuthenticationDto requestDto)
+        public async Task<IActionResult> Login(UserForLoginDto requestDto)
         {
             if (!await _services.Authentication.ValidateUserAsync(requestDto))
             {
@@ -43,6 +43,15 @@ namespace TodoApp.Api.Controllers
             }
 
             var model = await _services.Authentication.CreateTokenAsync(populateExpiration: true);
+
+            return Ok(model);
+        }
+
+        [HttpPut("token")]
+        [ServiceFilter(typeof(MediaTypeResolverFilter))]
+        public async Task<IActionResult> RefreshToken(TokenForRefreshDto requestDto)
+        {
+            var model = await _services.Authentication.RefreshTokenAsync(requestDto);
 
             return Ok(model);
         }

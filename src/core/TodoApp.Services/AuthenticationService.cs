@@ -50,7 +50,7 @@ namespace TodoApp.Services
             return result;
         }
 
-        public async Task<bool> ValidateUserAsync(UserForAuthenticationDto requestDto)
+        public async Task<bool> ValidateUserAsync(UserForLoginDto requestDto)
         {
             _user = await _userManager.FindByNameAsync(requestDto.UserName);
             var result = _user != null && await _userManager.CheckPasswordAsync(_user, requestDto.Password);

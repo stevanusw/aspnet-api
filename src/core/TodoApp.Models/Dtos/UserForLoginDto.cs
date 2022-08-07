@@ -2,7 +2,7 @@
 
 namespace TodoApp.Models.Dtos
 {
-    public record UserForAuthenticationDto
+    public record UserForLoginDto
     {
         [Required(ErrorMessage = "User name is required")]
         public string? UserName { get; init; }
