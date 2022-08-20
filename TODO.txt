@@ -17,3 +17,6 @@
 18. Add transaction
 19. Use IOptions => DONE
 20. Add Swagger => DONE
+21. Add Azure pipeline => DONE, classic pipeline
+22. BUG: RowLimitingOperationWithoutOrderByWarning, /api/todos
+23. Test CI/CD
