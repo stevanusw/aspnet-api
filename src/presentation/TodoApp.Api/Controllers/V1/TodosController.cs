@@ -7,12 +7,11 @@ using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
 using TodoApp.Models.Parameters;
 
-namespace TodoApp.Api.Controllers
+namespace TodoApp.Api.Controllers.V1
 {
     [ApiController]
-    [Route("api/todos")]
+    [Route("api/v{v:apiVersion}/todos")]
     [ApiVersion("1.0")]
-    [ApiExplorerSettings(GroupName = "v1")]
     public class TodosController : ControllerBase
     {
         private readonly IServiceManager _services;

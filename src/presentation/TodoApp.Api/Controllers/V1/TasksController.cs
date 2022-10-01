@@ -6,16 +6,16 @@ using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
 using TodoApp.Models.Parameters;
 
-namespace TodoApp.Api.Controllers
+namespace TodoApp.Api.Controllers.V1
 {
     [ApiController]
-    [Route("api/todos/{todoId:int}/tasks")]
+    [Route("api/v{v:apiVersion}/todos/{todoId:int}/tasks")]
     [ApiVersion("1.0")]
     public class TasksController : ControllerBase
     {
         private readonly IServiceManager _services;
 
-        public TasksController(IServiceManager services) =>  _services = services;
+        public TasksController(IServiceManager services) => _services = services;
 
         [HttpOptions]
         public IActionResult GetOptions()

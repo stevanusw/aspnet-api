@@ -15,3 +15,7 @@ dotnet tool install -g dotnet-ef
 
 7. Update EF Core CLI:
 dotnet tool update -g dotnet-ef
+
+8. Swagger/API versioning:
+https://referbruv.com/blog/versioning-apis-in-aspnet-core-explained-strategies-and-implementations/
+https://referbruv.com/blog/integrating-aspnet-core-api-versions-with-swagger-ui/

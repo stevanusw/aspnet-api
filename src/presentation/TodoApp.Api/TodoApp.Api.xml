@@ -4,14 +4,14 @@
         <name>TodoApp.Api</name>
     </assembly>
     <members>
-        <member name="M:TodoApp.Api.Controllers.TodosController.GetTodos(TodoApp.Models.Parameters.TodoParameters)">
+        <member name="M:TodoApp.Api.Controllers.V1.TodosController.GetTodos(TodoApp.Models.Parameters.TodoParameters)">
             <summary>
             Get the list of all todos
             </summary>
             <param name="parameters">Query string parameters</param>
             <returns>The todos list</returns>
         </member>
-        <member name="M:TodoApp.Api.Controllers.TodosController.CreateTodo(TodoApp.Models.Dtos.TodoForCreationDto)">
+        <member name="M:TodoApp.Api.Controllers.V1.TodosController.CreateTodo(TodoApp.Models.Dtos.TodoForCreationDto)">
             <summary>
             Creates a newly created todo
             </summary>

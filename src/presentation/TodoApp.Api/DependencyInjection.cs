@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -61,7 +62,12 @@ namespace TodoApp.Api
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
-            });
+                options.ApiVersionReader = new UrlSegmentApiVersionReader();
+            }).AddVersionedApiExplorer(setup =>
+            {
+                setup.GroupNameFormat = "'v'VVV";
+                setup.SubstituteApiVersionInUrl = true;
+            }); ;
         }
 
         public static IServiceCollection ConfigureIdentity(this IServiceCollection services)
@@ -124,7 +130,8 @@ namespace TodoApp.Api
                 options.SwaggerDoc("v2", new OpenApiInfo
                 {
                     Title = "Todo API",
-                    Version = "v2"
+                    Version = "v2",
+                    Description = "Todo API by stevanusw"
                 });
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

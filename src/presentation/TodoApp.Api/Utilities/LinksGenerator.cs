@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
 using System.Dynamic;
-using TodoApp.Api.Controllers;
+using TodoApp.Api.Controllers.V1;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
 using TodoApp.Models.Links;

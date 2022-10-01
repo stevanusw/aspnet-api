@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using TodoApp.Api;
 using TodoApp.Api.Formatters;
 using TodoApp.Api.Middlewares;
@@ -31,6 +32,12 @@ builder.Services.AddControllers(options =>
     .ConfigureApiBehaviorOptions(options =>
     {
         options.SuppressModelStateInvalidFilter = true;
+    })
+    .AddNewtonsoftJson() // To fix contractResolver showing from JsonPatchDocument in Swagger.
+    .AddJsonOptions(options =>
+    {
+        // To show friendly string enum in Swagger.
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -4,10 +4,10 @@ using TodoApp.Api.Filters;
 using TodoApp.Contracts.Services;
 using TodoApp.Models.Dtos;
 
-namespace TodoApp.Api.Controllers
+namespace TodoApp.Api.Controllers.V1
 {
     [ApiController]
-    [Route("api/authentication")]
+    [Route("api/v{v:apiVersion}/authentication")]
     [ApiVersion("1.0")]
     public class AuthenticationController : ControllerBase
     {

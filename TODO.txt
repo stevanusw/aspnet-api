@@ -19,4 +19,11 @@
 20. Add Swagger => DONE
 21. Add Azure pipeline => DONE, classic pipeline
 22. BUG: RowLimitingOperationWithoutOrderByWarning, /api/todos
-23. Test CI/CD
+23. Test CI/CD => DONE
+24. Add Angular project (14.2.3) => DONE
+25. Update .NET SDK 6.0.401 => DONE
+26. Fix swagger versioning => DONE
+27. Fix ContractResolver showing in Swagger => DONE
+28. Test HATEOAS with versioning
+29. Test root API with versioning
+30. Show enum as string in swagger => DONE.
