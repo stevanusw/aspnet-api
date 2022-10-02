@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TodoApp.Api.Filters;
 using TodoApp.Contracts.Services;
@@ -17,6 +18,7 @@ namespace TodoApp.Api.Controllers.V1
 
         [HttpPost("users")]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> RegisterUser(UserForRegistrationDto requestDto)
         {
             var result = await _services.Authentication.RegisterUserAsync(requestDto);
@@ -35,6 +37,7 @@ namespace TodoApp.Api.Controllers.V1
 
         [HttpPost("token")]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenDto))]
         public async Task<IActionResult> Login(UserForLoginDto requestDto)
         {
             if (!await _services.Authentication.ValidateUserAsync(requestDto))
@@ -49,6 +52,7 @@ namespace TodoApp.Api.Controllers.V1
 
         [HttpPut("token")]
         [ServiceFilter(typeof(MediaTypeResolverFilter))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenDto))]
         public async Task<IActionResult> RefreshToken(TokenForRefreshDto requestDto)
         {
             var model = await _services.Authentication.RefreshTokenAsync(requestDto);

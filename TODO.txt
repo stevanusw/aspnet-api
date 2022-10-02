@@ -8,9 +8,9 @@
 8. Sorting =>  DONE
 9. Data shaping => DONE
 10. HATEOAS => DONE
-11. Complete HATEOEAS for Tasks. => DONE
+11. Complete HATEOEAS for Tasks => DONE
 13. Root controller => DONE
-14. Add link wrapper for HATEOAS. => DONE
+14. Add link wrapper for HATEOAS => DONE
 15. Add API versioning => DONE
 16. Add Identity => DONE
 17. Add JWT, AccessToken & RefreshToken => DONE
@@ -26,4 +26,5 @@
 27. Fix ContractResolver showing in Swagger => DONE
 28. Test HATEOAS with versioning
 29. Test root API with versioning
-30. Show enum as string in swagger => DONE.
+30. Show enum as string in swagger => DONE
+31. Add ProducesResponseType => DONE

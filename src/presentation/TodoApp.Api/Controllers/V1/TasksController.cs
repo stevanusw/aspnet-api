@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Extensions;
 using TodoApp.Api.Filters;
@@ -18,6 +19,7 @@ namespace TodoApp.Api.Controllers.V1
         public TasksController(IServiceManager services) => _services = services;
 
         [HttpOptions]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetOptions()
         {
             Response.Headers.Add("Allow", "GET, HEAD, OPTIONS, POST, PUT, DELETE");
@@ -29,6 +31,7 @@ namespace TodoApp.Api.Controllers.V1
         [HttpHead]
         [ServiceFilter(typeof(MediaTypeResolverFilter))]
         [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TaskDto>))]
         public async Task<IActionResult> GetTasks(int todoId, [FromQuery] TaskParameters parameters)
         {
             var linkParameters = new LinkParameters(parameters, HttpContext);
@@ -42,6 +45,7 @@ namespace TodoApp.Api.Controllers.V1
         }
 
         [HttpGet("{taskId:int}", Name = nameof(GetTask))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TaskDto))]
         public async Task<IActionResult> GetTask(int todoId, int taskId, [FromQuery] TaskParameters parameters)
         {
             var model = await _services.Task.GetTaskAsync(todoId, taskId, parameters);
@@ -51,6 +55,7 @@ namespace TodoApp.Api.Controllers.V1
 
         [HttpPost]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TaskDto))]
         public async Task<IActionResult> CreateTask(int todoId, TaskForCreationDto requestDto)
         {
             var model = await _services.Task.CreateTaskAsync(todoId, requestDto);
@@ -65,6 +70,7 @@ namespace TodoApp.Api.Controllers.V1
         }
 
         [HttpDelete("{taskId:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteTask(int todoId, int taskId)
         {
             await _services.Task.DeleteTaskAsync(todoId, taskId);
@@ -74,6 +80,7 @@ namespace TodoApp.Api.Controllers.V1
 
         [HttpPut("{taskId:int}")]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateTask(int todoId, int taskId, TaskForUpdateDto requestDto)
         {
             await _services.Task.UpdateTaskAsync(todoId, taskId, requestDto);

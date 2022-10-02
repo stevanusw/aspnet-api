@@ -19,6 +19,7 @@ namespace TodoApp.Api.Controllers.V1
         public TodosController(IServiceManager services) => _services = services;
 
         [HttpOptions]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetOptions()
         {
             Response.Headers.Add("Allow", "GET, HEAD, OPTIONS, POST, PUT, DELETE, PATCH");
@@ -48,6 +49,7 @@ namespace TodoApp.Api.Controllers.V1
         }
 
         [HttpGet("{id}", Name = nameof(GetTodo))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TodoDto))]
         public async Task<IActionResult> GetTodo(int id, [FromQuery] TodoParameters parameters)
         {
             var model = await _services.Todo.GetTodoAsync(id, parameters);
@@ -79,6 +81,7 @@ namespace TodoApp.Api.Controllers.V1
         }
 
         [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteTodo(int id)
         {
             await _services.Todo.DeleteTodoAsync(id);
@@ -88,6 +91,7 @@ namespace TodoApp.Api.Controllers.V1
 
         [HttpPut("{id:int}")]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateTodo(int id, TodoForUpdateDto requestDto)
         {
             await _services.Todo.UpdateTodoAsync(id, requestDto);
@@ -96,6 +100,7 @@ namespace TodoApp.Api.Controllers.V1
         }
 
         [HttpPatch("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> PartiallyUpdateTodo(int id, JsonPatchDocument<TodoForUpdateDto> requestDto)
         {
             var model = await _services.Todo.GetTodoForPatchAsync(id);

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Extensions;
 using TodoApp.Contracts.Services;
+using TodoApp.Models.Dtos;
 using TodoApp.Models.Parameters;
 
 namespace TodoApp.Api.Controllers.V2
@@ -19,6 +21,7 @@ namespace TodoApp.Api.Controllers.V2
 
         [HttpGet]
         [MapToApiVersion("2.0")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TodoDto>))]
         public async Task<IActionResult> GetTodos([FromQuery] TodoParameters parameters)
         {
             var linkParameters = new LinkParameters(parameters, HttpContext);
