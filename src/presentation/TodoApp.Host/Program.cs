@@ -49,21 +49,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.AddProblemDetails();
 
-app.UseSwagger()
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger()
         .UseSwaggerUI(options =>
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1");
             options.SwaggerEndpoint("/swagger/v2/swagger.json", "Todo API v2");
         });
-
-if (app.Environment.IsDevelopment())
-{
-    /*app.UseSwagger()
-        .UseSwaggerUI(options =>
-        {
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "Todo API v1");
-            options.SwaggerEndpoint("/swagger/v2/swagger.json", "Todo API v2");
-        });*/
 }
 else 
 {
