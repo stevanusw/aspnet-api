@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Extensions;
 using TodoApp.Api.Filters;
@@ -30,7 +29,6 @@ namespace TodoApp.Api.Controllers.V1
         [HttpGet]
         [HttpHead]
         [ServiceFilter(typeof(MediaTypeResolverFilter))]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TaskDto>))]
         public async Task<IActionResult> GetTasks(int todoId, [FromQuery] TaskParameters parameters)
         {

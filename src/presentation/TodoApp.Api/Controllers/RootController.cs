@@ -16,25 +16,31 @@ namespace TodoApp.Api.Controllers
         [HttpGet(Name = "GetRoot")]
         public IActionResult GetRoot([FromHeader(Name = "Accept")] string mediaType = "")
         {
-            if (mediaType.Contains("application/vnd.todoapp.apiroot+json"))
+            //if (mediaType.Contains("application/vnd.todoapp.apiroot+json"))
             {
                 var links = new List<Link>
                 {
                     new Link(_linkGenerator.GetUriByName(HttpContext, nameof(GetRoot), null)!,
                         "self",
                         "GET"),
-                    new Link(_linkGenerator.GetUriByName(HttpContext, nameof(TodosController.GetTodos), null)!,
+                    new Link(_linkGenerator.GetUriByName(HttpContext, nameof(TodosController.GetTodos), new
+                    {
+                        v = "1"
+                    })!,
                         "todos",
                         "GET"),
-                    new Link(_linkGenerator.GetUriByName(HttpContext, nameof(TodosController.CreateTodo), null)!,
+                    new Link(_linkGenerator.GetUriByName(HttpContext, nameof(TodosController.CreateTodo), new
+                    {
+                        v = "1"
+                    })!,
                         "create_todo",
-                        "POST"),
+                        "POST")
                 };
 
                 return Ok(links);
             }
 
-            return NoContent();
+           // return NoContent();
         }
     }
 }

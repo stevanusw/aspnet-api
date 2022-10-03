@@ -24,7 +24,7 @@
 25. Update .NET SDK 6.0.401 => DONE
 26. Fix swagger versioning => DONE
 27. Fix ContractResolver showing in Swagger => DONE
-28. Test HATEOAS with versioning
-29. Test root API with versioning
+28. Fix HATEOAS with versioning => DONE
+29. Fix root API with versioning => DONE
 30. Show enum as string in swagger => DONE
 31. Add ProducesResponseType => DONE

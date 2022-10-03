@@ -32,7 +32,7 @@ namespace TodoApp.Api.Controllers.V1
         /// </summary>
         /// <param name="parameters">Query string parameters</param>
         /// <returns>The todos list</returns>
-        [HttpGet(Name = "GetTodos")]
+        [HttpGet(Name = nameof(GetTodos))]
         [HttpHead]
         [ServiceFilter(typeof(MediaTypeResolverFilter))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TodoDto>))]
@@ -65,7 +65,7 @@ namespace TodoApp.Api.Controllers.V1
         /// <response code="201">Returns the newly created todo</response>
         /// <response code="400">If the model is null</response>
         /// <response code="422">If the model is invalid</response>
-        [HttpPost(Name = "CreateTodo")]
+        [HttpPost(Name = nameof(CreateTodo))]
         [ServiceFilter(typeof(RequestDtoValidationFilter))]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TodoDto))]
         public async Task<IActionResult> CreateTodo(TodoForCreationDto requestDto)
