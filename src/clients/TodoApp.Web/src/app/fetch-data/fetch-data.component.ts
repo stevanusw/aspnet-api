@@ -11,13 +11,13 @@ import { environment } from "../../environments/environment";
 export class FetchDataComponent implements OnInit {
   public todos?: Todo[];
 
-  constructor(http: HttpClient) {
-    http.get<Todo[]>(environment.baseUrl + 'api/v1/todos').subscribe(result => {
-      this.todos = result;
-    }, error => console.error(error));
+  constructor(private http: HttpClient) {
   }
 
   ngOnInit(): void {
+    this.http.get<Todo[]>(environment.baseUrl + 'api/v1/todos').subscribe(result => {
+      this.todos = result;
+    }, error => console.error(error));
   }
 }
 
