@@ -109,7 +109,7 @@ namespace TodoApp.Api
 
                         ValidIssuer = jwtSettings["issuer"],
                         ValidAudience = jwtSettings["audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["secret"]))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["secret"]!))
                     };
                 });
 
