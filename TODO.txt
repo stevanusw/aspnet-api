@@ -28,3 +28,5 @@
 29. Fix root API with versioning => DONE
 30. Show enum as string in swagger => DONE
 31. Add ProducesResponseType => DONE
+32. Update .NET SDK 7.0.102 => DONE
+33. AutoMapper issue: https://stackoverflow.com/questions/74730425/system-datetime-on-t-maxintegertsystem-collections-generic-ienumerable1t => DONE
