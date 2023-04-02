@@ -19,3 +19,6 @@ dotnet tool update -g dotnet-ef
 8. Swagger/API versioning:
 https://referbruv.com/blog/versioning-apis-in-aspnet-core-explained-strategies-and-implementations/
 https://referbruv.com/blog/integrating-aspnet-core-api-versions-with-swagger-ui/
+
+9. Running through kestrel requires trusting certificate. Run dotnet dev-certs https --trust.
+10. Set JwtSettings.secret through UserSecrets json file.

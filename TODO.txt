@@ -30,3 +30,5 @@
 31. Add ProducesResponseType => DONE
 32. Update .NET SDK 7.0.102 => DONE
 33. AutoMapper issue: https://stackoverflow.com/questions/74730425/system-datetime-on-t-maxintegertsystem-collections-generic-ienumerable1t => DONE
+34. Update .NET SDK 7.0.202 => DONE
+35. Update dotnet-ef 7.0.4 => DONE
