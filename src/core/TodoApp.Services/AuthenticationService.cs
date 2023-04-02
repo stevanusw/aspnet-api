@@ -41,10 +41,10 @@ namespace TodoApp.Services
         public async Task<IdentityResult> RegisterUserAsync(UserForRegistrationDto requestDto)
         {
             var user = _mapper.Map<User>(requestDto);
-            var result = await _userManager.CreateAsync(user, requestDto.Password);
+            var result = await _userManager.CreateAsync(user, requestDto.Password!);
             if (result.Succeeded)
             {
-                await _userManager.AddToRolesAsync(user, requestDto.Roles);
+                await _userManager.AddToRolesAsync(user, requestDto.Roles!);
             }
 
             return result;
@@ -52,8 +52,8 @@ namespace TodoApp.Services
 
         public async Task<bool> ValidateUserAsync(UserForLoginDto requestDto)
         {
-            _user = await _userManager.FindByNameAsync(requestDto.UserName);
-            var result = _user != null && await _userManager.CheckPasswordAsync(_user, requestDto.Password);
+            _user = await _userManager.FindByNameAsync(requestDto.UserName!);
+            var result = _user != null && await _userManager.CheckPasswordAsync(_user, requestDto.Password!);
             if (!result)
             {
                 _logger.LogWarning(@"{caller}: Authentication failed. Wrong user name or password.", nameof(ValidateUserAsync));
@@ -93,7 +93,7 @@ namespace TodoApp.Services
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, _user!.UserName)
+                    new Claim(ClaimTypes.Name, _user!.UserName!)
                 };
 
                 var roles = await _userManager.GetRolesAsync(_user);
