@@ -32,3 +32,7 @@
 33. AutoMapper issue: https://stackoverflow.com/questions/74730425/system-datetime-on-t-maxintegertsystem-collections-generic-ienumerable1t => DONE
 34. Update .NET SDK 7.0.202 => DONE
 35. Update dotnet-ef 7.0.4 => DONE
+36. Use positional parameters syntax for all DTO records.
+37. How to use DateTimeOffset in EF?
+38. Add console program for EF migration.
+

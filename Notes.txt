@@ -22,3 +22,4 @@ https://referbruv.com/blog/integrating-aspnet-core-api-versions-with-swagger-ui/
 
 9. Running through kestrel requires trusting certificate. Run dotnet dev-certs https --trust.
 10. Set JwtSettings.secret through UserSecrets json file.
+11. 2/4/23 fully updated to .NET 7.
