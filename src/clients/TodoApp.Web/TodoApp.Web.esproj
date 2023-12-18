@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.26-alpha">
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>ff4aaed1-72d2-4f33-bf1b-e081fef46697</ProjectGuid>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupCommand>npm start</StartupCommand>
-    <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
-  </PropertyGroup>
-</Project>
