@@ -36,5 +36,5 @@
 37. How to use DateTimeOffset in EF?
 38. Add console program for EF migration.
 39. Update .NET SDK 8.0.100 => DONE
-40. Update all packages per 18/12/23.
+40. Update all packages per 18/12/23 => DONE.
 41. Update dotnet-ef 8.0.0 => DONE.
