@@ -3,7 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\core\TodoApp.Contracts\TodoApp.Contracts.csproj" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.4" />
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.2" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.7" />
   </ItemGroup>
 
   <PropertyGroup>
