@@ -21,7 +21,7 @@ namespace TodoApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult GetOptions()
         {
-            Response.Headers.Add("Allow", "GET, HEAD, OPTIONS, POST, PUT, DELETE");
+            Response.Headers.Append("Allow", "GET, HEAD, OPTIONS, POST, PUT, DELETE");
 
             return Ok();
         }

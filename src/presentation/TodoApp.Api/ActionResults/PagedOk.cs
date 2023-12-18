@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using System.Text.Json;
 using TodoApp.Models.Paging;
 
@@ -22,7 +24,7 @@ namespace TodoApp.Api.ActionResults
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
 
-            context.HttpContext.Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(PageInfo, serializeOptions));
+            context.HttpContext.Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(PageInfo, serializeOptions));
 
             await new OkObjectResult(Items).ExecuteResultAsync(context);
         }
