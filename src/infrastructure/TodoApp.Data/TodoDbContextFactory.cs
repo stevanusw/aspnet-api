@@ -7,13 +7,14 @@ namespace TodoApp.Data
     {
         public TodoDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder();
             var connectionString = @"Server=(localdb)\mssqllocaldb;Database=Todo;Integrated Security=true";
-            optionsBuilder.UseSqlServer(connectionString);
-            optionsBuilder.EnableSensitiveDataLogging();
+            var builder = new DbContextOptionsBuilder<TodoDbContext>()
+            .UseSqlServer(connectionString)
+            .EnableSensitiveDataLogging();
+            
             Console.WriteLine(connectionString);
 
-            return new TodoDbContext(optionsBuilder.Options);
+            return new TodoDbContext(builder.Options);
         }
     }
 }
