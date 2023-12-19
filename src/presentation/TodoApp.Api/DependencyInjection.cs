@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -57,17 +57,19 @@ namespace TodoApp.Api
 
         public static IServiceCollection ConfigureApiVersioning(this IServiceCollection services)
         {
-            return services.AddApiVersioning(options =>
+            services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
                 options.AssumeDefaultVersionWhenUnspecified = true;
                 options.DefaultApiVersion = new ApiVersion(1, 0);
                 options.ApiVersionReader = new UrlSegmentApiVersionReader();
-            }).AddVersionedApiExplorer(setup =>
+            }).AddApiExplorer(setup =>
             {
                 setup.GroupNameFormat = "'v'VVV";
                 setup.SubstituteApiVersionInUrl = true;
-            }); ;
+            });
+
+            return services;
         }
 
         public static IServiceCollection ConfigureIdentity(this IServiceCollection services)

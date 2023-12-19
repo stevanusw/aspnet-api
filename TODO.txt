@@ -38,3 +38,4 @@
 39. Update .NET SDK 8.0.100 => DONE
 40. Update all packages per 18/12/23 => DONE.
 41. Update dotnet-ef 8.0.0 => DONE.
+42. Remove obsolete packages. => DONE
