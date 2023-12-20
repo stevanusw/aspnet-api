@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 using TodoApp.Api;
 using TodoApp.Api.Formatters;
 using TodoApp.Api.Middlewares;
-using TodoApp.Data;
 using TodoApp.Host;
 using TodoApp.Logging;
 
