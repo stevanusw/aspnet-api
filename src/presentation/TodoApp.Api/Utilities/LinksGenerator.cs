@@ -9,7 +9,7 @@ using TodoApp.Models.Links;
 
 namespace TodoApp.Api.Utilities
 {
-    internal class LinksGenerator<T> : ILinksGenerator<T>
+    public class LinksGenerator<T> : ILinksGenerator<T>
     {
 		private readonly LinkGenerator _linkGenerator;
 		private readonly IDataShaper<T> _dataShaper;

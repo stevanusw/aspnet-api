@@ -4,8 +4,8 @@ using TodoApp.Api;
 using TodoApp.Api.Formatters;
 using TodoApp.Api.Middlewares;
 using TodoApp.Data;
+using TodoApp.Host;
 using TodoApp.Logging;
-using TodoApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

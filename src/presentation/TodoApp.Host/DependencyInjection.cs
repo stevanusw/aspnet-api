@@ -1,33 +1,67 @@
-﻿using Asp.Versioning;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Filters;
 using TodoApp.Api.Utilities;
+using TodoApp.Contracts.Repositories;
 using TodoApp.Contracts.Services;
 using TodoApp.Data;
+using TodoApp.Data.Repositories;
 using TodoApp.Entities;
+using TodoApp.Services;
+using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TodoApp.Models.Configuration;
+using Microsoft.OpenApi.Models;
+using TodoApp.Api;
 
-namespace TodoApp.Api
+namespace TodoApp.Host
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection ConfigureCors(this IServiceCollection services)
-            => services.AddCors(options =>
+        public static IServiceCollection ConfigureCoreServices(this IServiceCollection services)
+        {
+            return services.AddScoped<IServiceManager, ServiceManager>()
+                .AddAutoMapper(typeof(MappingProfile))
+                .AddSingleton(typeof(IDataShaper<>), typeof(DataShaper<>));
+        }
+
+        public static IServiceCollection ConfigureInfrastructureData(this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            return services.AddSqlServer<TodoDbContext>(configuration.GetConnectionString("SqlConnection"))
+                .AddScoped<IRepositoryManager, RepositoryManager>();
+        }
+
+        public static IServiceCollection ConfigureIdentity(this IServiceCollection services)
+        {
+            var builder = services.AddIdentity<User, IdentityRole>(options =>
             {
-                options.AddPolicy("CorsPolicy", builder
-                    => builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .WithExposedHeaders("X-Pagination"));
-            });
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 10;
+
+                options.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<TodoDbContext>()
+                .AddDefaultTokenProviders();
+
+            return services;
+        }
+
+        public static IServiceCollection ConfigureCors(this IServiceCollection services)
+           => services.AddCors(options =>
+           {
+               options.AddPolicy("CorsPolicy", builder
+                   => builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .WithExposedHeaders("X-Pagination"));
+           });
 
         public static IServiceCollection ConfigureFilters(this IServiceCollection services)
         {
@@ -68,24 +102,6 @@ namespace TodoApp.Api
                 setup.GroupNameFormat = "'v'VVV";
                 setup.SubstituteApiVersionInUrl = true;
             });
-
-            return services;
-        }
-
-        public static IServiceCollection ConfigureIdentity(this IServiceCollection services)
-        {
-            var builder = services.AddIdentity<User, IdentityRole>(options =>
-            {
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 10;
-
-                options.User.RequireUniqueEmail = true;
-            })
-                .ConfigureStore()
-                .AddDefaultTokenProviders();
 
             return services;
         }

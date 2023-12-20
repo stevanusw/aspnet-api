@@ -6,7 +6,7 @@ using TodoApp.Entities;
 
 namespace TodoApp.Data
 {
-    internal class TodoDbContext : IdentityDbContext<User>
+    public class TodoDbContext : IdentityDbContext<User>
     {
         public TodoDbContext(DbContextOptions options) : base(options)
         {

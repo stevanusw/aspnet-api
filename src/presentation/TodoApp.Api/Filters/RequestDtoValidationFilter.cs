@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace TodoApp.Api.Filters
 {
-    internal class RequestDtoValidationFilter : IActionFilter
+    public class RequestDtoValidationFilter : IActionFilter
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {

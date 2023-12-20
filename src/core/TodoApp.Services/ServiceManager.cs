@@ -11,7 +11,7 @@ using TodoApp.Models.Dtos;
 
 namespace TodoApp.Services
 {
-    internal class ServiceManager : IServiceManager
+    public class ServiceManager : IServiceManager
     {
         private readonly Lazy<ITodoService> _todoService;
         private readonly Lazy<ITaskService> _taskService;

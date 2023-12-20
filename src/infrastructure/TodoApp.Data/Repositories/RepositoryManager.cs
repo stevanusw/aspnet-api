@@ -2,7 +2,7 @@
 
 namespace TodoApp.Data.Repositories
 {
-    internal class RepositoryManager : IRepositoryManager
+    public class RepositoryManager : IRepositoryManager
     {
         private readonly TodoDbContext _dbContext;
         private readonly Lazy<ITodoRepository> _todoRepository;

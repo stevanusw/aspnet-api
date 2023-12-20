@@ -3,7 +3,7 @@ using TodoApp.Models.Dtos;
 
 namespace TodoApp.Services
 {
-    internal class MappingProfile : Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
