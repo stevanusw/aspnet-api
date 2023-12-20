@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using TodoApp.Data;
 using TodoApp.Data.Repositories;
 using TodoApp.Entities;
 using TodoApp.Models.Configuration;
+using TodoApp.Models.Exceptions;
 using TodoApp.Services;
 
 namespace TodoApp.Host
@@ -180,6 +182,17 @@ namespace TodoApp.Host
                 var xmlFile = $"{typeof(AssemblyReference).Assembly.GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
+            });
+        }
+
+        public static IServiceCollection ConfigureProblemDetails(this IServiceCollection services,
+           IHostEnvironment env)
+        {
+            return services.AddProblemDetails(options =>
+            {
+                options.IncludeExceptionDetails = (ctx, ex) => env.IsDevelopment();
+                options.MapToStatusCode<NotFoundException>(StatusCodes.Status404NotFound);
+                options.MapToStatusCode<BadRequestException>(StatusCodes.Status400BadRequest);
             });
         }
     }

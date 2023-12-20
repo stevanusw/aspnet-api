@@ -1,8 +1,8 @@
+using Hellang.Middleware.ProblemDetails;
 using Newtonsoft.Json.Serialization;
 using System.Text.Json.Serialization;
 using TodoApp.Api;
 using TodoApp.Api.Formatters;
-using TodoApp.Api.Middlewares;
 using TodoApp.Host;
 using TodoApp.Logging;
 
@@ -44,13 +44,13 @@ builder.Services.AddControllers(options =>
     }); // To fix contractResolver showing from JsonPatchDocument in Swagger.
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer()
+    .AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.AddProblemDetails();
+app.UseProblemDetails();
 
 if (app.Environment.IsDevelopment())
 {
