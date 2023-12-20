@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Formatters;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+using TodoApp.Api;
 using TodoApp.Api.Filters;
 using TodoApp.Api.Utilities;
 using TodoApp.Contracts.Repositories;
@@ -8,14 +14,8 @@ using TodoApp.Contracts.Services;
 using TodoApp.Data;
 using TodoApp.Data.Repositories;
 using TodoApp.Entities;
-using TodoApp.Services;
-using Asp.Versioning;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using TodoApp.Models.Configuration;
-using Microsoft.OpenApi.Models;
-using TodoApp.Api;
+using TodoApp.Services;
 
 namespace TodoApp.Host
 {
