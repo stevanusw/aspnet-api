@@ -41,3 +41,4 @@
 42. Remove obsolete packages. => DONE
 43. Delegate DI to Host so that API only need Contracts. => DONE
 44. Remove HttpContext from LinkParameters. => DONE
+45. Move ProblemDetails configuration to Host. => DONE
