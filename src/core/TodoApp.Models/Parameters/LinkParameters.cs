@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace TodoApp.Models.Parameters
+﻿namespace TodoApp.Models.Parameters
 {
-    public record LinkParameters(RequestParameters RequestParameters, HttpContext HttpContext);
+    public record LinkParameters(RequestParameters RequestParameters);
 }

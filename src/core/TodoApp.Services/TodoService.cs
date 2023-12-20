@@ -40,7 +40,7 @@ namespace TodoApp.Services
 
             var pagedEntities = await _repository.Todo.GetTodosAsync((TodoParameters)linkParameters.RequestParameters, false);
             var dtos = _mapper.Map<IEnumerable<TodoDto>>(pagedEntities);
-            var responseDto = _linksGenerator.TryGenerateLinks(dtos, linkParameters.RequestParameters.Fields, linkParameters.HttpContext);
+            var responseDto = _linksGenerator.TryGenerateLinks(dtos, linkParameters.RequestParameters.Fields);
 
             return (Dto: responseDto, PageInfo: pagedEntities.PageInfo);
         }

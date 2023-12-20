@@ -33,7 +33,7 @@ namespace TodoApp.Api.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TaskDto>))]
         public async Task<IActionResult> GetTasks(int todoId, [FromQuery] TaskParameters parameters)
         {
-            var linkParameters = new LinkParameters(parameters, HttpContext);
+            var linkParameters = new LinkParameters(parameters);
             var model = await _services.Task.GetTasksAsync(todoId, linkParameters);
             if (model.Dto.HasLinks)
             {

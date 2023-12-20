@@ -38,7 +38,7 @@ namespace TodoApp.Services
 
             var pagedEntities = await _repository.Task.GetTasksAsync(todoId, (TaskParameters)linkParameters.RequestParameters, false);
             var dtos = _mapper.Map<IEnumerable<TaskDto>>(pagedEntities);
-            var responseDto = _linksGenerator.TryGenerateLinks(dtos, linkParameters.RequestParameters.Fields, linkParameters.HttpContext);
+            var responseDto = _linksGenerator.TryGenerateLinks(dtos, linkParameters.RequestParameters.Fields);
 
             return (Dto: responseDto, PageInfo: pagedEntities.PageInfo);
         }

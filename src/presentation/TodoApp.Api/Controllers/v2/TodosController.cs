@@ -25,7 +25,7 @@ namespace TodoApp.Api.Controllers.V2
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<TodoDto>))]
         public async Task<IActionResult> GetTodos([FromQuery] TodoParameters parameters)
         {
-            var linkParameters = new LinkParameters(parameters, HttpContext);
+            var linkParameters = new LinkParameters(parameters);
             var model = await _services.Todo.GetTodosAsync(linkParameters);
             var v2Model = model.Dto.ShapedDtos!.Select(d => ((dynamic)d).Name += " V2");
 

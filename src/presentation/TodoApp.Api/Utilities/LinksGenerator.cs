@@ -13,20 +13,27 @@ namespace TodoApp.Api.Utilities
     {
 		private readonly LinkGenerator _linkGenerator;
 		private readonly IDataShaper<T> _dataShaper;
+		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public LinksGenerator(LinkGenerator linkGenerator, IDataShaper<T> dataShaper)
+		public LinksGenerator(LinkGenerator linkGenerator, IDataShaper<T> dataShaper, IHttpContextAccessor httpContextAccessor)
 		{
 			_linkGenerator = linkGenerator;
 			_dataShaper = dataShaper;
+			_httpContextAccessor = httpContextAccessor;
 		}
 
-		public LinkResponse TryGenerateLinks(IEnumerable<T> dtos, string? fields, HttpContext httpContext)
+		public LinkResponse TryGenerateLinks(IEnumerable<T> dtos, string? fields)
 		{
+			if (_httpContextAccessor.HttpContext == null)
+			{
+				throw new NullReferenceException(nameof(_httpContextAccessor.HttpContext));
+			}
+			
 			var shapedDtos = _dataShaper.Shape(dtos, fields);
 
-			if (ShouldGenerateLinks(httpContext))
+			if (ShouldGenerateLinks(_httpContextAccessor.HttpContext))
 			{
-				return ReturnLinkedDtos(shapedDtos, fields, httpContext);
+				return ReturnLinkedDtos(shapedDtos, fields, _httpContextAccessor.HttpContext);
 			}
 
 			return ReturnShapedDtos(shapedDtos);
