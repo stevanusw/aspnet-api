@@ -2,7 +2,6 @@ using Hellang.Middleware.ProblemDetails;
 using Newtonsoft.Json.Serialization;
 using System.Text.Json.Serialization;
 using TodoApp.Api;
-using TodoApp.Api.Formatters;
 using TodoApp.Host;
 using TodoApp.Logging;
 

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
-namespace TodoApp.Api.Formatters
+namespace TodoApp.Host
 {
-    public static class JsonPatchInputFormatterConfiguration
+    public static class Configuration
     {
         public static MvcOptions ConfigureJsonPatchInputFormatter(this MvcOptions options)
         {
