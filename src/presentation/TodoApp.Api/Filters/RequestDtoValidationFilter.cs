@@ -22,7 +22,7 @@ namespace TodoApp.Api.Filters
         public void OnActionExecuting(ActionExecutingContext context)
         {
             var requestDto = context.ActionArguments
-                .SingleOrDefault(a => a.Value!.ToString()!.Contains("Dto")).Value;
+                .SingleOrDefault(a => a.Value?.ToString()?.Contains("Dto") ?? false).Value;
 
             if (requestDto == null)
             {
