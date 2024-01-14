@@ -23,7 +23,7 @@ namespace TodoApp.Data.Extensions.Utilities
 				if (objectProperty == null)
 					continue;
 
-				var direction = param.EndsWith(" desc") ? "desc" : "asc";
+				var direction = param.EndsWith(" desc", StringComparison.InvariantCultureIgnoreCase) ? "desc" : "asc";
 
 				orderQueryBuilder.Append($"{objectProperty.Name.ToString()} {direction}, ");
 			}

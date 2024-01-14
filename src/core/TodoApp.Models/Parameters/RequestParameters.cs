@@ -17,7 +17,7 @@
         }
 
         public string? Search { get; init; }
-        public string? OrderBy { get; init; }
+        public virtual string? OrderBy { get; init; }
         public string? Fields { get; init; }
     }
 }
