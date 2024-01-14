@@ -52,7 +52,7 @@ namespace TodoApp.Api.Controllers.V1
         }
 
         [HttpPut("token")]
-        [ServiceFilter(typeof(MediaTypeResolverFilter))]
+        [ServiceFilter(typeof(RequestDtoValidationFilter))]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(TokenDto))]
         public async Task<IActionResult> RefreshToken(TokenForRefreshDto requestDto)
         {

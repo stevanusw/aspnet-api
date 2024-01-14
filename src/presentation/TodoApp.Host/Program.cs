@@ -16,7 +16,7 @@ builder.Services.ConfigureInfrastructureData(builder.Configuration)
     .ConfigureProblemDetails(builder.Environment)
     .ConfigureFilters()
     .ConfigureUtilities()
-    //.ConfigureMediaTypes() // Seems not returning 406 Not Acceptable without it.
+    //.ConfigureMediaTypes() // Must when ReturnHttpNotAcceptable = true.
     .ConfigureApiVersioning()
     .ConfigureCors()
     .ConfigureIdentity()

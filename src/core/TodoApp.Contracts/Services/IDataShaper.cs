@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using TodoApp.Models.Dtos;
+﻿using TodoApp.Models.Dtos;
 
 namespace TodoApp.Contracts.Services;
 

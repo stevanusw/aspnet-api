@@ -43,3 +43,6 @@
 44. Remove HttpContext from LinkParameters. => DONE
 45. Move ProblemDetails configuration to Host. => DONE
 46. Move JsonPatchInputFormatter to Host. => DONE
+47. Add HATEOAS for singular GET.
+48. Use TodosV2Controller to target specific api-supported-versions of controller. => DONE
+49. Remove _user from AuthenticationService.
